@@ -41,7 +41,13 @@ class Engine
          */
         static void destroy();
 
-        // TODO:
+        /**
+         * Initialise the engine
+         *
+         * **Note**: _The running state is set to `true`_
+         *
+         * @return
+         */
         bool init();
 
         // TODO:
@@ -59,7 +65,19 @@ class Engine
         // TODO:
         void event();
 
+        /**
+         * Determine if the engine is running
+         *
+         * @return
+         */
+        [[nodiscard]] bool isRunning() const;
+
     protected:
+        /**
+         * Running state of this engine
+         */
+        bool running;
+
         /**
          * Default Constructor
          */

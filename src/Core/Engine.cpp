@@ -18,7 +18,11 @@ void Engine::destroy()
     std::cout << __PRETTY_FUNCTION__ << std::endl;
 }
 
-Engine::Engine() = default;
+Engine::Engine():
+    running(false)
+{
+    // N/A
+}
 
 Engine::~Engine()
 {
@@ -30,9 +34,9 @@ Engine::~Engine()
 
 bool Engine::init()
 {
-    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    this->running = true;
 
-    return false;
+    return this->running;
 }
 
 bool Engine::clean()
@@ -60,4 +64,9 @@ void Engine::render()
 void Engine::event()
 {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
+
+bool Engine::isRunning() const
+{
+    return this->running;
 }
