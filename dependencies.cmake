@@ -11,3 +11,4 @@ find_package(Git REQUIRED)
 # Other dependencies...
 include("sdl2")
 include("sdl2-image")
+include("sdl2-ttf")
