@@ -29,6 +29,11 @@ class Engine
         static Engine& getInstance();
 
         /**
+         * Destructor
+         */
+        virtual ~Engine();
+
+        /**
          * Destroy the engine instance
          *
          * **Warning**: singleton instance will be rest when
@@ -36,16 +41,20 @@ class Engine
          */
         static void destroy();
 
+        // TODO:
+        void update();
+
+        // TODO:
+        void render();
+
+        // TODO:
+        void event();
+
     protected:
         /**
          * Default Constructor
          */
         Engine();
-
-        /**
-         * Destructor
-         */
-        ~Engine();
 
     private:
         /**

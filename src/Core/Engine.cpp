@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Core/Engine.h"
 
 Engine& Engine::getInstance()
@@ -11,15 +12,29 @@ Engine& Engine::getInstance()
 
 void Engine::destroy()
 {
-    if (instance != nullptr) {
-        delete instance;
-        instance = nullptr;
-    }
+    // Caution: delete will ensure that the destructor is invoked!
+    delete instance;
 }
 
 Engine::Engine() = default;
 
 Engine::~Engine()
 {
-    Engine::destroy();
+    // Ensure that instance is reset to null pointer
+    instance = nullptr;
+}
+
+void Engine::update()
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
+
+void Engine::render()
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
+
+void Engine::event()
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
 }
