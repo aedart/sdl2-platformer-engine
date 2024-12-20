@@ -37,7 +37,7 @@ include("utilities")
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 # Add all c source files under the src directory
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Copy resources (gfx... etc) into the build directory
