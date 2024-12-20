@@ -42,6 +42,9 @@ class Engine
         static void destroy();
 
         // TODO:
+        void init();
+
+        // TODO:
         void update();
 
         // TODO:

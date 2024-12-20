@@ -24,6 +24,11 @@ Engine::~Engine()
     instance = nullptr;
 }
 
+void Engine::init()
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
+
 void Engine::update()
 {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
