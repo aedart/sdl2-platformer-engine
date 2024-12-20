@@ -45,6 +45,9 @@ class Engine
         void init();
 
         // TODO:
+        void cleanup();
+
+        // TODO:
         void update();
 
         // TODO:
