@@ -28,14 +28,18 @@ Engine::~Engine()
     std::cout << __PRETTY_FUNCTION__ << std::endl;
 }
 
-void Engine::init()
+bool Engine::init()
 {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
+
+    return false;
 }
 
-void Engine::cleanup()
+bool Engine::clean()
 {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
+
+    return false;
 }
 
 void Engine::quit()

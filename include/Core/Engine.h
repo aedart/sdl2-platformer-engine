@@ -42,10 +42,10 @@ class Engine
         static void destroy();
 
         // TODO:
-        void init();
+        bool init();
 
         // TODO:
-        void cleanup();
+        bool clean();
 
         // TODO:
         void quit();
