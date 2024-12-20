@@ -1,6 +1,10 @@
 #ifndef CORE_ENGINE_H
 #define CORE_ENGINE_H
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+
 /**
  * Engine
  *
@@ -42,18 +46,26 @@ class Engine
         static void destroy();
 
         /**
-         * Initialise the engine
+         * Initialise this engine
          *
-         * **Note**: _The running state is set to `true`_
+         * Method creates a new window and changes engine's
+         * running state to `true`.
          *
-         * @return
+         * @param title Window title
+         * @param width Window width in pixels
+         * @param height Window height in pixels
+         *
+         * @return False has already been initialised (if running) or
+         *         if underlying drivers failed to initialise.
          */
-        bool init();
+        bool init(const char* title, int width, int height);
 
         // TODO:
         bool clean();
 
-        // TODO:
+        /**
+         * Stop the engine
+         */
         void quit();
 
         // TODO:
@@ -62,7 +74,10 @@ class Engine
         // TODO:
         void render();
 
-        // TODO:
+        /**
+         * Polls the underlying SDL for any events
+         * and reacts accordingly.
+         */
         void event();
 
         /**
@@ -72,6 +87,27 @@ class Engine
          */
         [[nodiscard]] bool isRunning() const;
 
+        /**
+         * Get the SLD renderer
+         *
+         * @return
+         */
+        [[nodiscard]] SDL_Renderer* getRenderer() const;
+
+        /**
+         * Returns the screen width in pixels
+         *
+         * @return
+         */
+        [[nodiscard]] int getScreenWidth() const;
+
+        /**
+         * Returns the screen height in pixels
+         *
+         * @return
+         */
+        [[nodiscard]] int getScreenHeight() const;
+
     protected:
         /**
          * Running state of this engine
@@ -79,9 +115,49 @@ class Engine
         bool running;
 
         /**
+         * Screen width in pixels
+         */
+        int screenWidth;
+
+        /**
+         * Screen height in pixels
+         */
+        int screenHeight;
+
+        /**
+         * The window in which the engine will render
+         */
+        SDL_Window* window;
+
+        /**
+         * The SDL renderer
+         */
+        SDL_Renderer* renderer;
+
+        /**
          * Default Constructor
          */
         Engine();
+
+        /**
+         * Returns a new SDL window
+         *
+         * @param title Window title
+         * @param width Window width in pixels
+         * @param height Window height in pixels
+         *
+         * @return
+         */
+        SDL_Window* makeWindow(const char* title, int width, int height);
+
+        /**
+         * Returns a new SDL renderer
+         *
+         * @param window
+         *
+         * @return
+         */
+        SDL_Renderer* makeRenderer(SDL_Window* window);
 
     private:
         /**
