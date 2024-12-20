@@ -38,6 +38,11 @@ void Engine::cleanup()
     std::cout << __PRETTY_FUNCTION__ << std::endl;
 }
 
+void Engine::quit()
+{
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
+
 void Engine::update()
 {
     std::cout << __PRETTY_FUNCTION__ << std::endl;
