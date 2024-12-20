@@ -9,5 +9,5 @@ message("Resolving dependencies for ${PROJECT_NAME}")
 find_package(Git REQUIRED)
 
 # Other dependencies...
-# include("sdl2")
+include("sdl2")
 # include("sdl2-image")
