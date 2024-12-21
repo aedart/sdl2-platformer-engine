@@ -50,7 +50,7 @@ class TextureManager
          *
          * @return
          */
-        bool load(std::string id, const std::string& file);
+        bool load(const std::string& id, const std::string& file);
 
         /**
          * Clean all textures from the memory
@@ -68,7 +68,7 @@ class TextureManager
          * @param flip Flip mode
          */
         void draw(
-            std::string id,
+            const std::string& id,
             int x,
             int y,
             int width,
@@ -81,7 +81,7 @@ class TextureManager
          *
          * @param id
          */
-        void drop(std::string id);
+        void drop(const std::string& id);
 
     protected:
         /**
