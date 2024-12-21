@@ -5,13 +5,6 @@
 
 #include "Core/Engine.h"
 
-// Define the SDL flags for initialisation, which must be ready
-// before able to start a game loop.
-constexpr int SDL_FLAGS = SDL_INIT_VIDEO | SDL_INIT_TIMER;
-
-// Define the SDL Image flags for initialisation.
-constexpr int SDL_IMAGE_FLAGS = IMG_INIT_PNG;
-
 Engine& Engine::getInstance()
 {
     if (instance == nullptr) {
@@ -64,6 +57,15 @@ bool Engine::init(const char *title, const int width, const int height)
         return true;
     }
 
+    // ---------------------------------------------------------------------- //
+
+    // Define the SDL flags for initialisation, which must be ready
+    // before able to start a game loop.
+    constexpr int SDL_FLAGS = SDL_INIT_VIDEO | SDL_INIT_TIMER;
+
+    // Define the SDL Image flags for initialisation.
+    constexpr int SDL_IMAGE_FLAGS = IMG_INIT_PNG;
+
     // Abort if SDL failed to initialise.
     if (SDL_Init(SDL_FLAGS) != 0) {
         SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "SDL Init failed: %s", SDL_GetError());
@@ -81,6 +83,8 @@ bool Engine::init(const char *title, const int width, const int height)
         SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "SDL ttf init failed: %s", TTF_GetError());
         return this->running = false;
     }
+
+    // ---------------------------------------------------------------------- //
 
     // Set the screen width and height
     this->screenWidth = width;
