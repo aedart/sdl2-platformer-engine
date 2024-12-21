@@ -2,7 +2,6 @@
 #define GRAPHICS_TEXTURE_MANAGER_H
 
 #include <SDL2/SDL.h>
-
 #include <string>
 
 /**
