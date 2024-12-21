@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <string>
+#include <map>
 
 /**
  * TextureManager
@@ -49,7 +50,7 @@ class TextureManager
          *
          * @return
          */
-        bool load(std::string id, std::string file);
+        bool load(std::string id, const std::string& file);
 
         /**
          * Clean all textures from the memory
@@ -83,6 +84,11 @@ class TextureManager
         void drop(std::string id);
 
     protected:
+        /**
+         * Map of the loaded textures
+         */
+        std::map<std::string, SDL_Texture*> textures;
+
         /**
          * Default constructor
          */
