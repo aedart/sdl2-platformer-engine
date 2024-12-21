@@ -42,10 +42,13 @@ Engine::Engine():
 
 Engine::~Engine()
 {
-    // Quit if still running
+    // Quit if the engine is somehow still running
     if (this->isRunning()) {
         this->quit();
     }
+
+    this->window = nullptr;
+    this->renderer = nullptr;
 
     // Ensure that instance is reset to null pointer
     instance = nullptr;
