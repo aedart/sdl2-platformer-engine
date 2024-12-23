@@ -4,6 +4,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "Core/Engine.h"
+#include "Graphics/TextureManager.h"
 
 Engine& Engine::getInstance()
 {
@@ -16,6 +17,9 @@ Engine& Engine::getInstance()
 
 void Engine::destroy()
 {
+    // Destroy all textures
+    TextureManager::destroy();
+
     // Caution: delete will ensure that the destructor is invoked!
     delete instance;
 
@@ -109,15 +113,20 @@ bool Engine::init(const char *title, const int width, const int height)
 
 bool Engine::clean()
 {
-    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    // Clean the textures
+    TextureManager::getInstance().clean();
 
-    return false;
+    return true;
 }
 
 void Engine::quit()
 {
     // Ensure engine stops running.
     this->running = false;
+
+    // Regardless of circumstance, ensure to free anything that
+    // might still be in memory...
+    this->clean();
 
     // Destroy renderer and window.
     SDL_DestroyRenderer(this->renderer);

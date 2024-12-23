@@ -60,7 +60,11 @@ class Engine
          */
         bool init(const char* title, int width, int height);
 
-        // TODO:
+        /**
+         * Cleans all elements that are in memory
+         *
+         * @return
+         */
         bool clean();
 
         /**
