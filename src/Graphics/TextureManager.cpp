@@ -60,7 +60,7 @@ void TextureManager::draw(
     const int y,
     const int width,
     const int height,
-    SDL_RendererFlip flip
+    const SDL_RendererFlip flip
 ){
     // Abort if no texture exists for given id
     if (!this->textures.contains(id)) {
