@@ -16,6 +16,8 @@ TextureManager& TextureManager::getInstance()
 
 TextureManager::~TextureManager()
 {
+    this->clean();
+
     instance = nullptr;
 }
 
@@ -51,7 +53,13 @@ bool TextureManager::load(const std::string& id, const std::string& file)
 
 void TextureManager::clean()
 {
+    std::map<std::string, SDL_Texture*>::iterator iterator;
 
+    for (iterator = this->textures.begin(); iterator != this->textures.end(); iterator++) {
+        this->destroyTexture(iterator->second);
+    }
+
+    this->textures.clear();
 }
 
 void TextureManager::draw(
@@ -91,7 +99,15 @@ void TextureManager::draw(
 
 void TextureManager::drop(const std::string& id)
 {
+    // Abort if no texture exists for given id
+    if (!this->textures.contains(id)) {
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Unable to destroy texture for id: %s", id.c_str());
+        return;
+    }
 
+    this->destroyTexture(this->textures[id]);
+
+    this->textures.erase(id);
 }
 
 // -----------------------------------------------------------------------------
@@ -99,3 +115,8 @@ void TextureManager::drop(const std::string& id)
 // -----------------------------------------------------------------------------
 
 TextureManager::TextureManager() = default;
+
+void TextureManager::destroyTexture(SDL_Texture* texture)
+{
+    SDL_DestroyTexture(texture);
+}
