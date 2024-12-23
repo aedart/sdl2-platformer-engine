@@ -53,6 +53,11 @@ bool TextureManager::load(const std::string& id, const std::string& file)
 
 void TextureManager::clean()
 {
+    // Skip if there is nothing to clean...
+    if (this->textures.empty()) {
+        return;
+    }
+
     std::map<std::string, SDL_Texture*>::iterator iterator;
 
     for (iterator = this->textures.begin(); iterator != this->textures.end(); iterator++) {
