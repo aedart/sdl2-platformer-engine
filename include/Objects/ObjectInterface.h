@@ -5,6 +5,8 @@
 * Object
 *
 * @interface
+*
+* @author Alin Eugen Deac <aedart@gmail.com>
 */
 class ObjectInterface
 {
