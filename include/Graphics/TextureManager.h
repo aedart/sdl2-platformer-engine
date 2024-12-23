@@ -94,6 +94,13 @@ class TextureManager
          */
         TextureManager();
 
+        /**
+         * Destroy given texture
+         *
+         * @param texture
+         */
+        void destroyTexture(SDL_Texture* texture);
+
     private:
         /**
          * Singleton instance
