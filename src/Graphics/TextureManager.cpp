@@ -84,7 +84,7 @@ void TextureManager::draw(
         flip
     );
 
-    if (!success) {
+    if (success != 0) {
         SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Unable to render texture for %s: %s", id.c_str(), SDL_GetError());
     }
 }
