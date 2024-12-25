@@ -2,8 +2,9 @@
 #define GRAPHICS_TEXTURE_MANAGER_H
 
 #include <SDL2/SDL.h>
-#include <string>
+
 #include <map>
+#include <string>
 
 /**
  * TextureManager
@@ -73,6 +74,29 @@ class TextureManager
             int y,
             int width,
             int height,
+            SDL_RendererFlip flip = SDL_FLIP_NONE
+        );
+
+        /**
+         * Draw a frame from given texture
+         *
+         * @param id The id of the texture
+         * @param x X-axis offset in pixels
+         * @param y Y-axis offset in pixels
+         * @param width The width of the texture to be drawn in pixels
+         * @param height The height of the texture to be drawn in pixels
+         * @param row The row to be drawn
+         * @param frame The frame to be drawn
+         * @param flip Flip mode
+         */
+        void drawFrame(
+            const std::string& id,
+            int x,
+            int y,
+            int width,
+            int height,
+            int row,
+            int frame,
             SDL_RendererFlip flip = SDL_FLIP_NONE
         );
 

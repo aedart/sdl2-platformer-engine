@@ -75,17 +75,39 @@ void TextureManager::draw(
     const int height,
     const SDL_RendererFlip flip
 ){
+    this->drawFrame(
+        id,
+        x,
+        y,
+        width,
+        height,
+        0,
+        0,
+        flip
+    );
+}
+
+void TextureManager::drawFrame(
+    const std::string& id,
+    const int x,
+    const int y,
+    const int width,
+    const int height,
+    const int row,
+    const int frame,
+    const SDL_RendererFlip flip
+) {
     // Abort if no texture exists for given id
     if (!this->textures.contains(id)) {
         SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Unable to find texture for id: %s", id.c_str());
         return;
     }
 
-    // The source of the texture we wish to draw
-    const SDL_Rect source = { 0, 0, width, height };
+    // The source of the texture we wish to draw (row and frame)
+    const SDL_Rect source = {width * frame, height * row, width, height};
 
     // The destination on screen where the texture must be drawn
-    const SDL_Rect dest = { x, y, width, height };
+    const SDL_Rect dest = {x, y, width, height};
 
     const auto success = SDL_RenderCopyEx(
         Engine::getInstance().getRenderer(),
