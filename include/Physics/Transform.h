@@ -31,15 +31,6 @@ class Transform
         explicit Transform(float x = 0, float y = 0);
 
         /**
-         * Outputs transform's coordinates and given message to stdout
-         *
-         * @param message
-         */
-        void print(const std::string& message = "") const;
-
-    protected:
-
-        /**
          * Translate x position
          *
          * @param x X position
@@ -67,6 +58,13 @@ class Transform
          * @param vector
          */
         void translate(const Vector2D& vector);
+
+        /**
+         * Outputs transform's coordinates and given message to stdout
+         *
+         * @param message
+         */
+        void print(const std::string& message = "") const;
 };
 
 #endif  // PHYSICS_TRANSFORM_H
