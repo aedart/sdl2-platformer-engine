@@ -5,7 +5,7 @@ RigidBody::RigidBody():
     mass(DEFAULT_MASS),
     gravity(DEFAULT_GRAVITY)
 {
-
+    // TODO: Default values for friction ???
 }
 
 void RigidBody::setMass(const float mass)
