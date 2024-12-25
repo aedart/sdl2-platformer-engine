@@ -23,7 +23,7 @@ class GameObject: public ObjectInterface
          *
          * @param properties
          */
-        GameObject(const Properties* properties);
+        explicit GameObject(const Properties* properties);
 
         /**
          * Update this object
