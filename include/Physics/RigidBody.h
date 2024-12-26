@@ -22,6 +22,26 @@ class RigidBody
         static constexpr float DEFAULT_GRAVITY = 9.81f;
 
         /**
+         * Default forward motion
+         */
+        static constexpr int FORWARD = 1;
+
+        /**
+         * Default backward motion
+         */
+        static constexpr int BACKWARD = -1;
+
+        /**
+         * Default upward motion
+         */
+        static constexpr int UPWARD = -1;
+
+        /**
+         * Default downward motion
+         */
+        static constexpr int DOWNWARD = 1;
+
+        /**
          * Constructor
          */
         RigidBody();
@@ -73,11 +93,39 @@ class RigidBody
         void applyForceX(float force);
 
         /**
+         * Apply a forward motion force on the x-axis
+         *
+         * @param force
+         */
+        void applyForceXForward(float force);
+
+        /**
+         * Apply a backward motion force on the x-axis
+         *
+         * @param force
+         */
+        void applyForceXBackward(float force);
+
+        /**
          * Apply a force on the y-axis
          *
          * @param force
          */
         void applyForceY(float force);
+
+        /**
+         * Apply a upward motion force on the y-axis
+         *
+         * @param force
+         */
+        void applyForceYUpward(float force);
+
+        /**
+         * Apply a downward motion force on the y-axis
+         *
+         * @param force
+         */
+        void applyForceYDownward(float force);
 
         /**
          * Remove force

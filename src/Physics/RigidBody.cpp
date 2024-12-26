@@ -41,9 +41,31 @@ void RigidBody::applyForceX(const float force)
 {
     this->force.x = force;
 }
+
+void RigidBody::applyForceXForward(const float force)
+{
+    this->applyForceX(force * RigidBody::FORWARD);
+}
+
+void RigidBody::applyForceXBackward(const float force)
+{
+    this->applyForceX(force * RigidBody::BACKWARD);
+}
+
+
 void RigidBody::applyForceY(const float force)
 {
     this->force.y = force;
+}
+
+void RigidBody::applyForceYUpward(const float force)
+{
+    this->applyForceY(force * RigidBody::UPWARD);
+}
+
+void RigidBody::applyForceYDownward(const float force)
+{
+    this->applyForceY(force * RigidBody::DOWNWARD);
 }
 
 void RigidBody::unsetForce()
