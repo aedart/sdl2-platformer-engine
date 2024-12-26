@@ -93,18 +93,18 @@ class RigidBody
         void applyForceX(float force);
 
         /**
-         * Apply a forward motion force on the x-axis
+         * Apply a forward motion force on the x-axis (right)
          *
          * @param force
          */
-        void applyForceXForward(float force);
+        void applyForceForward(float force);
 
         /**
-         * Apply a backward motion force on the x-axis
+         * Apply a backward motion force on the x-axis (left)
          *
          * @param force
          */
-        void applyForceXBackward(float force);
+        void applyForceBackward(float force);
 
         /**
          * Apply a force on the y-axis
@@ -114,18 +114,18 @@ class RigidBody
         void applyForceY(float force);
 
         /**
-         * Apply a upward motion force on the y-axis
+         * Apply a upward motion force on the y-axis (up)
          *
          * @param force
          */
-        void applyForceYUpward(float force);
+        void applyForceUpward(float force);
 
         /**
-         * Apply a downward motion force on the y-axis
+         * Apply a downward motion force on the y-axis (down)
          *
          * @param force
          */
-        void applyForceYDownward(float force);
+        void applyForceDownward(float force);
 
         /**
          * Remove force
