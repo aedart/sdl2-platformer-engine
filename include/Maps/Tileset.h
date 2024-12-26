@@ -53,7 +53,7 @@ class Tileset
         /**
          * The pixel size of the tiles
          */
-        int tilesSize;
+        int tileSize;
 };
 
 #endif  // MAPS_TILESET_H
