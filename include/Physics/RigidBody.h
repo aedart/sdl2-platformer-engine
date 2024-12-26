@@ -4,16 +4,6 @@
 #include "Physics/Vector2D.h"
 
 /**
- * Default mass of a body
- */
-constexpr float DEFAULT_MASS = 1.0f;
-
-/**
- * Default gravity of a body
- */
-constexpr float DEFAULT_GRAVITY = 9.81f;
-
-/**
  * Rigid Body
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
@@ -21,6 +11,16 @@ constexpr float DEFAULT_GRAVITY = 9.81f;
 class RigidBody
 {
     public:
+        /**
+         * Default mass of a body
+         */
+        static constexpr float DEFAULT_MASS = 1.0f;
+
+        /**
+         * Default gravity of a body
+         */
+        static constexpr float DEFAULT_GRAVITY = 9.81f;
+
         /**
          * Constructor
          */

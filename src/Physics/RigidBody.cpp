@@ -1,9 +1,9 @@
-#include "Physics/RigidBody.h"
 #include "Physics/Vector2D.h"
+#include "Physics/RigidBody.h"
 
 RigidBody::RigidBody():
-    mass(DEFAULT_MASS),
-    gravity(DEFAULT_GRAVITY)
+    mass(RigidBody::DEFAULT_MASS),
+    gravity(RigidBody::DEFAULT_GRAVITY)
 {
     // TODO: Default values for friction ???
 }
