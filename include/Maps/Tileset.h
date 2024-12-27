@@ -8,7 +8,7 @@
  *
  * Data structure representation of a tileset
  *
- * @see http://www.mapeditor.org/
+ * @see https://www.mapeditor.org/
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
