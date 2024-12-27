@@ -23,12 +23,12 @@ class GameMap
          *
          * @param delta
          */
-        void update(float delta);
+        void update(float delta) const;
 
         /**
          * Render this game map
          */
-        void render();
+        void render() const;
 
         /**
          * Get the layers of this game map

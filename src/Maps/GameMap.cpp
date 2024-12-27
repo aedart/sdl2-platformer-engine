@@ -4,16 +4,16 @@
 
 GameMap::GameMap() = default;
 
-void GameMap::update(const float delta)
+void GameMap::update(const float delta) const
 {
-    for (const auto &layer : this->layers) {
+    for (const auto &layer : this->getLayers()) {
         layer->update(delta);
     }
 }
 
-void GameMap::render()
+void GameMap::render() const
 {
-    for (const auto &layer : this->layers) {
+    for (const auto &layer : this->getLayers()) {
         layer->render();
     }
 }
