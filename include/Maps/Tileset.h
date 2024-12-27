@@ -18,12 +18,12 @@ class Tileset
         /**
          * Name of this tileset
          */
-        std::string name;
+        const std::string& name;
 
         /**
          * The source texture file of this tileset
          */
-        std::string source;
+        const std::string& source;
 
         /**
          * Width of the tiles in this set, in pixels
@@ -74,8 +74,8 @@ class Tileset
          * @param lastID ID of the last tile
          */
         Tileset(
-            std::string name,
-            std::string source,
+            const std::string& name,
+            const std::string& source,
             int tileWidth,
             int tileHeight,
             int rows,
