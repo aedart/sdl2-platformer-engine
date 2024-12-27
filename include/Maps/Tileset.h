@@ -26,14 +26,14 @@ class Tileset
         std::string source;
 
         /**
-         * ID of the first tile
+         * Width of the tiles in this set, in pixels
          */
-        int firstID;
+        int tileWidth;
 
         /**
-         * ID of the last tile
+         * Height of the tiles in this set, in pixels
          */
-        int lastID;
+        int tileHeight;
 
         /**
          * Amount of rows in tileset
@@ -51,14 +51,39 @@ class Tileset
         int tilesCount;
 
         /**
-         * Width of the tiles in this set, in pixels
+         * ID of the first tile
          */
-        int tileWidth;
+        int firstID;
 
         /**
-         * Height of the tiles in this set, in pixels
+         * ID of the last tile
          */
-        int tileHeight;
+        int lastID;
+
+        /**
+         * Constructor
+         *
+         * @param name Name of this tileset
+         * @param source The source texture file of this tileset
+         * @param tileWidth Width of the tiles in this set, in pixels
+         * @param tileHeight Height of the tiles in this set, in pixels
+         * @param rows Amount of rows in tileset
+         * @param columns Amount of columns in tileset
+         * @param tilesCount Total amount of tiles in this tileset
+         * @param firstID ID of the first tile
+         * @param lastID ID of the last tile
+         */
+        Tileset(
+            std::string name,
+            std::string source,
+            int tileWidth,
+            int tileHeight,
+            int rows,
+            int columns,
+            int tilesCount,
+            int firstID,
+            int lastID
+        );
 };
 
 #endif  // MAPS_TILESET_H
