@@ -41,8 +41,8 @@ class TitleLayer : public Layer
             int tileHeight,
             int rows,
             int columns,
-            TileMap& tileMap,
-            TilesetList& tilesets
+            TileMap* tileMap,
+            TilesetList* tilesets
         );
 
         /**
@@ -88,12 +88,12 @@ class TitleLayer : public Layer
         /**
          * The tile map matrix
          */
-        TileMap& tileMap;
+        TileMap* tileMap;
 
         /**
          * The tilesets in this layer
          */
-        TilesetList& tilesets;
+        TilesetList* tilesets;
 };
 
 #endif  // MAPS_TITLE_LAYER_H

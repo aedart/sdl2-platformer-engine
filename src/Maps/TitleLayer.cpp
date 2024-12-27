@@ -5,8 +5,8 @@ TitleLayer::TitleLayer(
     const int tileHeight,
     const int rows,
     const int columns,
-    TileMap& tileMap,
-    TilesetList& tilesets
+    TileMap* tileMap,
+    TilesetList* tilesets
 ):
     tileWidth(tileWidth),
     tileHeight(tileHeight),
@@ -29,5 +29,5 @@ void TitleLayer::update(float delta)
 
 TileMap& TitleLayer::getTileMap() const
 {
-    return this->tileMap;
+    return *this->tileMap;
 }
