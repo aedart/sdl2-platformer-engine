@@ -29,14 +29,16 @@ class TitleLayer : public Layer
         /**
          * Constructor
          *
-         * @param tileSize The size of the tiles in pixels
+         * @param tileWidth Width of the tiles in this layer, in pixels
+         * @param tileHeight Height of the tiles in this layer, in pixels
          * @param rows Amount of rows in tileset
          * @param columns Amount of columns in tileset
          * @param tileMap The tile map matrix
          * @param tilesets List of tilesets
          */
         TitleLayer(
-            int tileSize,
+            int tileWidth,
+            int tileHeight,
             int rows,
             int columns,
             TileMap& tileMap,
@@ -64,9 +66,14 @@ class TitleLayer : public Layer
 
     protected:
         /**
-         * The pixel size of the tiles
+         * Width of the tiles in this layer, in pixels
          */
-        int tileSize;
+        int tileWidth;
+
+        /**
+         * Height of the tiles in this layer, in pixels
+         */
+        int tileHeight;
 
         /**
          * Amount of rows in tileset

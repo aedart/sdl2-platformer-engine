@@ -51,9 +51,14 @@ class Tileset
         int tilesCount;
 
         /**
-         * The pixel size of the tiles
+         * Width of the tiles in this set, in pixels
          */
-        int tileSize;
+        int tileWidth;
+
+        /**
+         * Height of the tiles in this set, in pixels
+         */
+        int tileHeight;
 };
 
 #endif  // MAPS_TILESET_H

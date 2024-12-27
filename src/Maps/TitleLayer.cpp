@@ -1,13 +1,15 @@
 #include "Maps/TitleLayer.h"
 
 TitleLayer::TitleLayer(
-    const int tileSize,
+    const int tileWidth,
+    const int tileHeight,
     const int rows,
     const int columns,
     TileMap& tileMap,
     TilesetList& tilesets
 ):
-    tileSize(tileSize),
+    tileWidth(tileWidth),
+    tileHeight(tileHeight),
     rows(rows),
     columns(columns),
     tileMap(tileMap),
