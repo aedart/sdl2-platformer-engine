@@ -35,13 +35,13 @@ class GameMap
          *
          * @return
          */
-        std::vector<Layer*>& getLayers();
+        std::vector<Layer*>& getLayers() const;
 
     protected:
         /**
          * Layers of this map
          */
-        std::vector<Layer*> layers;
+        std::vector<Layer*>* layers;
 };
 
 #endif  // MAPS_GAME_MAP_H

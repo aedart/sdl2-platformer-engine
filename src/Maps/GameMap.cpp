@@ -18,7 +18,7 @@ void GameMap::render()
     }
 }
 
-std::vector<Layer*>& GameMap::getLayers()
+std::vector<Layer*>& GameMap::getLayers() const
 {
-    return this->layers;
+    return *this->layers;
 }
