@@ -8,6 +8,7 @@
 
 #include "Maps/GameMap.h"
 #include "Maps/TitleLayer.h"
+#include "Maps/Tileset.h"
 
 /**
  * Map Parser
@@ -50,15 +51,92 @@ class Parser
          */
         virtual ~Parser();
 
+        /**
+         * Load a map from a source file
+         *
+         * @param id The ID of the map
+         * @param source The source file of the map
+         *
+         * @return
+         */
+        bool load(const std::string& id, const std::string& source);
+
+        /**
+         * Determine if a game map exists for given ID
+         *
+         * @param id The ID of the loaded map
+         *
+         * @return
+         */
+        bool has(const std::string& id) const;
+
+        /**
+         * Get game map that matches given ID
+         *
+         * @param id The ID of the loaded map
+         *
+         * @return Pointer to matching Game Map instance
+         */
+        GameMap* get(const std::string& id);
+
+        /**
+         * Removes loaded maps from memory
+         */
+        void clean();
+
     protected:
+
+        /**
+         * A map of the loaded game maps
+         */
+        std::map<std::string, GameMap*> maps;
 
         /**
          * Default constructor
          */
         Parser();
 
-    private:
+        /**
+         * Parse map
+         *
+         * @param id The ID of the map
+         * @param source The source file of the map
+         *
+         * @return
+         */
+        bool parse(const std::string& id, const std::string& source);
 
+        /**
+         * Parse XML Element into a tileset
+         *
+         * @param element Tileset xml element
+         *
+         * @return A new tileset instance
+         */
+        Tileset parseTileset(const tinyxml2::XMLElement* element);
+
+        /**
+         * Parse XML Element into a tile layer
+         *
+         * @param element Map layer xml element
+         * @param tilesets The tileset list
+         * @param tileWidth Width of tiles in pixels
+         * @param tileHeight Height of tiles in pixels
+         * @param rows Amount of rows
+         * @param columns Amount of columns
+         *
+         * @return A pointer to a new tile layer instance
+         */
+        TitleLayer parseTitleLayer(
+            const tinyxml2::XMLElement* element,
+            TilesetList* tilesets,
+            int tileWidth,
+            int tileHeight,
+            int rows,
+            int columns
+        );
+
+    private:
         /**
          * Singleton instance
          */
