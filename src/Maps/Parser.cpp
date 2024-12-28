@@ -48,12 +48,17 @@ GameMap* Parser::get(const std::string& id)
 
 void Parser::clean()
 {
-    // TODO: The cleanup MUST loop through the map and delete ALL pointers,
-    // TODO: before moving on to clear the map itself!
-    // TODO: - Layers also contain pointers to other objects, meaning the
-    // TODO: same MUST happen inside them, before their are deleted.
-    // TODO: This includes: TileMap and TilesetList !!!
-    return;
+    std::map<std::string, GameMap*>::iterator iterator;
+    for (iterator = this->maps.begin(); iterator != this->maps.end(); iterator++) {
+
+        // TODO: - Layers also contain pointers to other objects, meaning the
+        // TODO: same MUST happen inside them, before their are deleted.
+        // TODO: This includes: TileMap and TilesetList !!!
+
+        delete iterator->second;
+    }
+
+    this->maps.clear();
 }
 
 
