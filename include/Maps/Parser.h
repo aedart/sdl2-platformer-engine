@@ -113,7 +113,7 @@ class Parser
          *
          * @return A new tileset instance
          */
-        Tileset parseTileset(const tinyxml2::XMLElement* element);
+        Tileset* parseTileset(const tinyxml2::XMLElement* element);
 
         /**
          * Parse XML Element into a tile layer
@@ -127,9 +127,9 @@ class Parser
          *
          * @return A pointer to a new tile layer instance
          */
-        TitleLayer parseTitleLayer(
+        TitleLayer* parseTitleLayer(
             const tinyxml2::XMLElement* element,
-            TilesetList* tilesets,
+            const TilesetList& tilesets,
             int tileWidth,
             int tileHeight,
             int rows,
