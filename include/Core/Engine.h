@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include "Maps/GameMap.h"
 
 /**
  * Engine
@@ -137,6 +138,11 @@ class Engine
          * The SDL renderer
          */
         SDL_Renderer* renderer;
+
+        /**
+         * The current game map to render
+         */
+        GameMap* currentMap;
 
         /**
          * Default Constructor
