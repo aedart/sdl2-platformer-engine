@@ -14,6 +14,11 @@ class GameMap
 {
     public:
         /**
+         * Layers of this map
+         */
+        std::vector<Layer*> layers;
+
+        /**
          * Constructor
          */
         GameMap();
@@ -29,19 +34,6 @@ class GameMap
          * Render this game map
          */
         void render() const;
-
-        /**
-         * Get the layers of this game map
-         *
-         * @return
-         */
-        std::vector<Layer*>& getLayers() const;
-
-    protected:
-        /**
-         * Layers of this map
-         */
-        std::vector<Layer*>* layers;
 };
 
 #endif  // MAPS_GAME_MAP_H
