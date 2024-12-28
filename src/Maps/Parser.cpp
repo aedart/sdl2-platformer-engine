@@ -168,8 +168,8 @@ TitleLayer Parser::parseTitleLayer(
 
     // Loop through the matrix according to amount of rows and columns,
     // and populate the tilemap vector.
-    for (int row = 0; row == rows; row++) {
-        for (int column = 0; column == columns; column++) {
+    for (int row = 0; row < rows; row++) {
+        for (int column = 0; column < columns; column++) {
             std::getline(matrixStream, id, ',');
 
             // const std::stringstream converter(id);
