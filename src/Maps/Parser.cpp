@@ -52,6 +52,7 @@ void Parser::clean()
     // TODO: before moving on to clear the map itself!
     // TODO: - Layers also contain pointers to other objects, meaning the
     // TODO: same MUST happen inside them, before their are deleted.
+    // TODO: This includes: TileMap and TilesetList !!!
     return;
 }
 
