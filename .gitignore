@@ -37,3 +37,6 @@
 # Build directory
 build/*
 !build/.gitkeep
+
+# Tile maps (sessions)
+*.tiled-session
