@@ -8,6 +8,7 @@
 #include "Inputs/InputHandler.h"
 #include "Timers/Timer.h"
 #include "Maps/Parser.h"
+#include "Cameras/Camera.h"
 
 // TODO: Clean this stuff
 #include "Physics/RigidBody.h"
@@ -30,6 +31,7 @@ void Engine::destroy()
     InputHandler::destroy();
     TextureManager::destroy();
     Parser::destroy();
+    Camera::destroy();
 
     // Caution: delete will ensure that the destructor is invoked!
     delete instance;
@@ -145,6 +147,10 @@ bool Engine::init(const char *title, const int width, const int height)
         100,
         200
     ));
+
+    // TODO: Camera...
+    Camera::getInstance().setTarget(player->getPosition());
+
     // TODO: -- end cleanup
 
     return this->running = true;
@@ -189,13 +195,14 @@ void Engine::update()
     const auto deltaTime = Timer::getInstance().getDeltaTime();
 
     // Update the current game map.
-
     this->currentMap->update(deltaTime);
 
     // TODO: Cleanup this stuff
     player->update(deltaTime);
     // TODO: -- end cleanup
 
+    // Update the camera's position
+    Camera::getInstance().update(deltaTime);
 }
 
 void Engine::render()
