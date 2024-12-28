@@ -7,6 +7,7 @@
 #include "Objects/ObjectInterface.h"
 #include "Objects/Properties.h"
 #include "Physics/Transform.h"
+#include "Physics/Point.h"
 
 /**
  * Game Object
@@ -42,6 +43,13 @@ class GameObject: public ObjectInterface
          */
         virtual void clean() = 0;
 
+        /**
+         * Get the current position of this game object
+         *
+         * @return
+         */
+        [[nodiscard]] Point& getPosition() const;
+
     protected:
         /**
          * ID of the texture this game object uses
@@ -67,6 +75,11 @@ class GameObject: public ObjectInterface
          * Flip mode (orientation) of this game object
          */
         SDL_RendererFlip flip;
+
+        /**
+         * Current position of this game object
+         */
+        Point* position;
 };
 
 #endif // OBJECTS_GAME_OBJECT_H
