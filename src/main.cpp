@@ -1,5 +1,8 @@
 #include <iostream>
+
 #include "Core/Engine.h"
+#include "Graphics/TextureManager.h"
+#include "Timers/Timer.h"
 
 /**
  * C++ 2D Platform Engine, based on SDL
@@ -47,6 +50,9 @@ int main(int argc, char *argv[])
 
         // Finally, render
         engine.render();
+
+        // Ensure the delta time is updated...
+        Timer::getInstance().tick();
     }
 
     engine.clean();
