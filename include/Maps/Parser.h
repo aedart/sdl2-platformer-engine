@@ -68,7 +68,7 @@ class Parser
          *
          * @return
          */
-        bool has(const std::string& id) const;
+        [[nodiscard]] bool has(const std::string& id) const;
 
         /**
          * Get game map that matches given ID
