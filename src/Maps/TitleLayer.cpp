@@ -11,17 +11,15 @@ TitleLayer::TitleLayer(
     const int rows,
     const int columns,
     TileMap tileMap,
-    TilesetList* tilesets
+    TilesetList tilesets
 ):
     tileWidth(tileWidth),
     tileHeight(tileHeight),
     rows(rows),
     columns(columns),
     tileMap(std::move(tileMap)),
-    tilesets(tilesets)
+    tilesets(std::move(tilesets))
 {
-    std::cout << __PRETTY_FUNCTION__ << std::endl;
-
     // TODO: Uh... this is really ugle! All tileset' textures are loaded here...
     // TODO: This SHOULD be in a method to be invoked only once.
     auto& manager = TextureManager::getInstance();
@@ -34,8 +32,8 @@ void TitleLayer::render()
 {
     auto& manager = TextureManager::getInstance();
 
-    const auto tileMap = this->getTileMap();
-    const auto tilesetList = this->getTilesetsList();
+    const auto tileMap = this->tileMap;
+    const auto tilesetList = this->tilesets;
 
     for (unsigned int row = 0; row < this->rows; row++) {
         for (unsigned int column = 0; column < this->columns; column++) {
@@ -102,7 +100,7 @@ TileMap TitleLayer::getTileMap() const
     return this->tileMap;
 }
 
-TilesetList& TitleLayer::getTilesetsList() const
+TilesetList TitleLayer::getTilesetsList() const
 {
-    return *this->tilesets;
+    return this->tilesets;
 }
