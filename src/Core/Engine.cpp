@@ -5,6 +5,14 @@
 
 #include "Core/Engine.h"
 #include "Graphics/TextureManager.h"
+#include "Inputs/InputHandler.h"
+#include "Timers/Timer.h"
+#include "Maps/Parser.h"
+
+// TODO: Clean this stuff
+#include "Physics/RigidBody.h"
+#include "Characters/Warrior.h"
+Warrior* player = nullptr;
 
 Engine& Engine::getInstance()
 {
@@ -17,8 +25,11 @@ Engine& Engine::getInstance()
 
 void Engine::destroy()
 {
-    // Destroy all textures
+    // Destroy all singleton instances
+    Timer::destroy();
+    InputHandler::destroy();
     TextureManager::destroy();
+    Parser::destroy();
 
     // Caution: delete will ensure that the destructor is invoked!
     delete instance;
@@ -43,6 +54,10 @@ Engine::~Engine()
     if (this->isRunning()) {
         this->quit();
     }
+
+    // NOTE: current map is a pointer that will be destroyed
+    // by the parser!
+    this->currentMap = nullptr;
 
     this->window = nullptr;
     this->renderer = nullptr;
@@ -108,13 +123,39 @@ bool Engine::init(const char *title, const int width, const int height)
         return this->running = false;
     }
 
+    // TODO: Cleanup this stuff
+    const std::string mapID = "demo_map";
+    auto& mapParser = Parser::getInstance();
+
+    if (!mapParser.load(mapID, "resources/maps/demo_map.tmx")) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to load map: %s", mapID.c_str());
+        return this->running = false;
+    }
+
+    this->currentMap = mapParser.get(mapID);
+
+    // TODO: ...
+    TextureManager::getInstance().load("warrior_idle", "resources/characters/punk/Punk_idle.png");
+    TextureManager::getInstance().load("warrior_run", "resources/characters/punk/Punk_run.png");
+    player = new Warrior(new Properties(
+        "warrior_idle",
+        48,
+        48,
+        100,
+        200
+    ));
+    // TODO: -- end cleanup
+
     return this->running = true;
 }
 
 bool Engine::clean()
 {
-    // Clean the textures
     TextureManager::getInstance().clean();
+
+    // Warning: Cleaning the map parser here, can, for some reason cause a
+    // segfault. For now, we leave this as is...
+    //Parser::getInstance().clean();
 
     return true;
 }
@@ -140,35 +181,48 @@ void Engine::quit()
 
 void Engine::update()
 {
-    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    // Debug
+    // std::cout << __PRETTY_FUNCTION__ << std::endl;
+
+    // Obtain the delta time
+    const auto deltaTime = Timer::getInstance().getDeltaTime();
+
+    // Update the current game map.
+
+    this->currentMap->update(deltaTime);
+
+    // TODO: Cleanup this stuff
+    player->update(deltaTime);
+    // TODO: -- end cleanup
+
 }
 
 void Engine::render()
 {
+    // Skip render if no longer running
+    if (!this->running) {
+        return;
+    }
+
     SDL_SetRenderDrawColor(this->renderer, 55, 55, 88, 255);
 
+    // Clean previous rendering
     SDL_RenderClear(this->renderer);
 
+    // Render the current map
+    this->currentMap->render();
+
+    // TODO: Cleanup this stuff
+    player->draw();
+    // TODO: -- end cleanup
+
+    // Finally, show the rendered elements.
     SDL_RenderPresent(this->renderer);
 }
 
 void Engine::event()
 {
-    SDL_Event event;
-
-    // Poll the SDL for any event.
-    SDL_PollEvent(&event);
-
-    // Handle the SDL event
-    switch (event.type) {
-        case SDL_QUIT:
-            this->quit();
-        break;
-
-        default:
-            // N/A
-            break;
-    }
+    InputHandler::getInstance().listen();
 }
 
 bool Engine::isRunning() const
