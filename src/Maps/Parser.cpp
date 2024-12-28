@@ -48,7 +48,10 @@ GameMap* Parser::get(const std::string& id)
 
 void Parser::clean()
 {
-    // TODO:
+    // TODO: The cleanup MUST loop through the map and delete ALL pointers,
+    // TODO: before moving on to clear the map itself!
+    // TODO: - Layers also contain pointers to other objects, meaning the
+    // TODO: same MUST happen inside them, before their are deleted.
     return;
 }
 
@@ -180,12 +183,12 @@ TitleLayer Parser::parseTitleLayer(
     }
 
     // Finally, return a new Tile Layer instance
-    return TitleLayer(
+    return {
         tileWidth,
         tileHeight,
         rows,
         columns,
         tilemap,
         tilesets
-    );
+    };
 }
