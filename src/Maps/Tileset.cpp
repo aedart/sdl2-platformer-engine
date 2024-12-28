@@ -1,7 +1,7 @@
 #include "Maps/Tileset.h"
 
 #include <string>
-#include <utility>
+#include <iostream>
 
 Tileset::Tileset(
     const std::string& name,
@@ -24,4 +24,20 @@ Tileset::Tileset(
     firstID(firstID),
     lastID(lastID)
 {
+}
+
+void Tileset::print(const std::string& message) const
+{
+    std::cout << "Tileset: " << std::endl
+        << message << ": " << std::endl
+        << "name: " << this->name << std::endl
+        << "source: " << this->source << std::endl
+        << "tile width: " << this->tileWidth << std::endl
+        << "tile height: " << this->tileHeight << std::endl
+        << "rows: " << this->rows << std::endl
+        << "columns: " << this->columns << std::endl
+        << "tiles count: " << this->tilesCount << std::endl
+        << "first ID: " << this->firstID << std::endl
+        << "last ID: " << this->lastID << std::endl
+        << std::endl;
 }

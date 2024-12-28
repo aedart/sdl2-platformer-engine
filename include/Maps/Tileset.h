@@ -84,6 +84,13 @@ class Tileset
             int firstID,
             int lastID
         );
+
+        /**
+         * Outputs this tileset to stdout with given message
+         *
+         * @param message
+         */
+        void print(const std::string& message = "") const;
 };
 
 #endif  // MAPS_TILESET_H
