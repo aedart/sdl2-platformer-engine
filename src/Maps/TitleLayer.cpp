@@ -1,4 +1,6 @@
 #include "Maps/TitleLayer.h"
+#include "Maps/Tileset.h"
+#include "Graphics/TextureManager.h"
 
 TitleLayer::TitleLayer(
     const int tileWidth,
@@ -15,11 +17,71 @@ TitleLayer::TitleLayer(
     tileMap(tileMap),
     tilesets(tilesets)
 {
+    // TODO: Uh... this is really ugle! All tileset' textures are loaded here...
+    // TODO: This SHOULD be in a method to be invoked only once.
+    auto& manager = TextureManager::getInstance();
+    for (const auto &tileset : this->getTilesetsList()) {
+        manager.load(tileset.name, "resources/maps/" + tileset.source);
+    }
 }
 
 void TitleLayer::render()
 {
-    // TODO:
+    auto& manager = TextureManager::getInstance();
+
+    const auto tileMap = this->getTileMap();
+    const auto tilesetList = this->getTilesetsList();
+
+    for (unsigned int row = 0; row < this->rows; row++) {
+        for (unsigned int column = 0; column < this->columns; column++) {
+            int tileID = tileMap[row][column];
+
+            // Skip if tile ID is zero (nothing)
+            if (tileID == 0) {
+                continue;
+            }
+
+            // Determine from which tileset the tile ID originates from, when
+            // there are more than one tileset available in this layer.
+            int tilesetIndex = 0;
+            if (tilesetList.size() > 1) {
+                // Because of the structure of "tiled" map, we need to re-resolve the tile ID
+                // as well as the index of the tileset, or the wrong image / tile will be drawn!
+                for (int i = 1; i < tilesetList.size(); i++) {
+
+                    // If tile ID is inside the current tileset...
+                    if (tileID > tilesetList[i].firstID && tileID < tilesetList[i].lastID) {
+                        tileID = tileID + tilesetList[i].tilesCount - tilesetList[i].lastID;
+                        tilesetIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            // Obtain identified tileset and compute target tile row and column
+            auto tileset = tilesetList[tilesetIndex];
+            int tileRow = tileID / tileset.columns;
+            int tileColumn = tileID - (tileRow * tileset.columns) - 1;
+
+            // Adjust row and column, if the tile is located on the last column
+            // in the tileset, or it will not be obtainable / drawn!
+            if (tileID % tileset.columns == 0) {
+                tileRow--;
+                tileColumn = tileset.columns - 1;
+            }
+
+            // Finally, draw the tile...
+            manager.drawTile(
+                tileset.name,
+                column * this->tileWidth, // NOTE: Use layer's tile size here!
+                row * this->tileHeight, // NOTE: Use layer's tile size here!
+                tileset.tileWidth,
+                tileset.tileHeight,
+                tileRow,
+                tileColumn
+            );
+        }
+    }
 }
 
 void TitleLayer::update(float delta)
@@ -30,4 +92,9 @@ void TitleLayer::update(float delta)
 TileMap& TitleLayer::getTileMap() const
 {
     return *this->tileMap;
+}
+
+TilesetList& TitleLayer::getTilesetsList() const
+{
+    return *this->tilesets;
 }

@@ -64,6 +64,13 @@ class TitleLayer : public Layer
          */
         [[nodiscard]] TileMap& getTileMap() const;
 
+        /**
+         * Get this layers list of tilesets
+         *
+         * @return
+         */
+        [[nodiscard]] TilesetList& getTilesetsList() const;
+
     protected:
         /**
          * Width of the tiles in this layer, in pixels
