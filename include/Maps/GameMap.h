@@ -24,6 +24,11 @@ class GameMap
         GameMap();
 
         /**
+         * Destructor
+         */
+        ~GameMap();
+
+        /**
          * Update this game map
          *
          * @param delta
