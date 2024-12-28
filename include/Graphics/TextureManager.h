@@ -101,6 +101,29 @@ class TextureManager
         );
 
         /**
+         * Draw a tile from given tileset
+         *
+         * @param tilesetID The id of the texture (tileset id)
+         * @param x X-axis offset in pixels
+         * @param y Y-axis offset in pixels
+         * @param width The width of the tile texture to be drawn in pixels
+         * @param height The height of the tile texture to be drawn in pixels
+         * @param row The row to be drawn
+         * @param frame The frame to be drawn
+         * @param flip Flip mode
+         */
+        void drawTile(
+            const std::string& tilesetID,
+            int x,
+            int y,
+            int width,
+            int height,
+            int row,
+            int frame,
+            SDL_RendererFlip flip = SDL_FLIP_NONE
+        );
+
+        /**
          * Drop (remove) texture from this manager
          *
          * @param id

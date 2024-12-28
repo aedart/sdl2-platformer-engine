@@ -124,6 +124,28 @@ void TextureManager::drawFrame(
     }
 }
 
+void TextureManager::drawTile(
+    const std::string& tilesetID,
+    const int x,
+    const int y,
+    const int width,
+    const int height,
+    const int row,
+    const int frame,
+    const SDL_RendererFlip flip
+) {
+    this->drawFrame(
+        tilesetID,
+        x,
+        y,
+        width,
+        height,
+        row,
+        frame,
+        flip
+    );
+}
+
 void TextureManager::drop(const std::string& id)
 {
     // Abort if no texture exists for given id
