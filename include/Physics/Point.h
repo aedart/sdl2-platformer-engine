@@ -45,7 +45,7 @@ class Point
          *
          * @return
          */
-        Point operator+=(Point& a, const Point& b) const;
+        friend Point operator+=(Point& a, const Point& b);
 
         /**
          * Subtraction operator overloading
@@ -64,7 +64,7 @@ class Point
          *
          * @return
          */
-        Point operator-=(Point& a, const Point& b) const;
+        friend Point operator-=(Point& a, const Point& b);
 
         /**
          * Multiplication operator overloading

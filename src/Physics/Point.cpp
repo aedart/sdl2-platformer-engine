@@ -10,7 +10,7 @@ Point Point::operator+(const Point& point) const
     return Point(this->x + point.x, this->y + point.y);
 }
 
-Point Point::operator+=(Point& a, const Point& b) const
+Point operator+=(Point& a, const Point& b)
 {
     a.x += b.x;
     a.y += b.y;
@@ -23,7 +23,7 @@ Point Point::operator-(const Point& point) const
     return Point(this->x - point.x, this->y - point.y);
 }
 
-Point Point::operator-=(Point& a, const Point& b) const
+Point operator-=(Point& a, const Point& b)
 {
     a.x -= b.x;
     a.y -= b.y;
