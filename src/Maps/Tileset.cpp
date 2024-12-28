@@ -2,10 +2,11 @@
 
 #include <string>
 #include <iostream>
+#include <utility>
 
 Tileset::Tileset(
-    const std::string& name,
-    const std::string& source,
+    std::string name,
+    std::string source,
     const int tileWidth,
     const int tileHeight,
     const int rows,
@@ -14,8 +15,8 @@ Tileset::Tileset(
     const int firstID,
     const int lastID
 ):
-    name(name),
-    source(source),
+    name(std::move(name)),
+    source(std::move(source)),
     tileWidth(tileWidth),
     tileHeight(tileHeight),
     rows(rows),
