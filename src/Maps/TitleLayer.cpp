@@ -2,26 +2,31 @@
 #include "Maps/Tileset.h"
 #include "Graphics/TextureManager.h"
 
+#include <iostream>
+#include <utility>
+
 TitleLayer::TitleLayer(
     const int tileWidth,
     const int tileHeight,
     const int rows,
     const int columns,
-    TileMap* tileMap,
+    TileMap tileMap,
     TilesetList* tilesets
 ):
     tileWidth(tileWidth),
     tileHeight(tileHeight),
     rows(rows),
     columns(columns),
-    tileMap(tileMap),
+    tileMap(std::move(tileMap)),
     tilesets(tilesets)
 {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+
     // TODO: Uh... this is really ugle! All tileset' textures are loaded here...
     // TODO: This SHOULD be in a method to be invoked only once.
     auto& manager = TextureManager::getInstance();
     for (const auto &tileset : this->getTilesetsList()) {
-        manager.load(tileset.name, "resources/maps/" + tileset.source);
+        manager.load(tileset->name, "resources/maps/" + tileset->source);
     }
 }
 
@@ -50,8 +55,8 @@ void TitleLayer::render()
                 for (int i = 1; i < tilesetList.size(); i++) {
 
                     // If tile ID is inside the current tileset...
-                    if (tileID > tilesetList[i].firstID && tileID < tilesetList[i].lastID) {
-                        tileID = tileID + tilesetList[i].tilesCount - tilesetList[i].lastID;
+                    if (tileID > tilesetList[i]->firstID && tileID < tilesetList[i]->lastID) {
+                        tileID = tileID + tilesetList[i]->tilesCount - tilesetList[i]->lastID;
                         tilesetIndex = i;
                         break;
                     }
@@ -60,23 +65,23 @@ void TitleLayer::render()
 
             // Obtain identified tileset and compute target tile row and column
             auto tileset = tilesetList[tilesetIndex];
-            int tileRow = tileID / tileset.columns;
-            int tileColumn = tileID - (tileRow * tileset.columns) - 1;
+            int tileRow = tileID / tileset->columns;
+            int tileColumn = tileID - (tileRow * tileset->columns) - 1;
 
             // Adjust row and column, if the tile is located on the last column
             // in the tileset, or it will not be obtainable / drawn!
-            if (tileID % tileset.columns == 0) {
+            if (tileID % tileset->columns == 0) {
                 tileRow--;
-                tileColumn = tileset.columns - 1;
+                tileColumn = tileset->columns - 1;
             }
 
             // Finally, draw the tile...
             manager.drawTile(
-                tileset.name,
+                tileset->name,
                 column * this->tileWidth, // NOTE: Use layer's tile size here!
                 row * this->tileHeight, // NOTE: Use layer's tile size here!
-                tileset.tileWidth,
-                tileset.tileHeight,
+                tileset->tileWidth,
+                tileset->tileHeight,
                 tileRow,
                 tileColumn
             );
@@ -87,11 +92,14 @@ void TitleLayer::render()
 void TitleLayer::update(float delta)
 {
     // TODO:
+
+    // Debug
+    // std::cout << __PRETTY_FUNCTION__ << std::endl;
 }
 
-TileMap& TitleLayer::getTileMap() const
+TileMap TitleLayer::getTileMap() const
 {
-    return *this->tileMap;
+    return this->tileMap;
 }
 
 TilesetList& TitleLayer::getTilesetsList() const

@@ -9,7 +9,7 @@
 /**
  * Tileset List
  */
-using TilesetList = std::vector<Tileset>;
+using TilesetList = std::vector<Tileset*>;
 
 /**
  * Tile Map
@@ -41,7 +41,7 @@ class TitleLayer : public Layer
             int tileHeight,
             int rows,
             int columns,
-            TileMap* tileMap,
+                   TileMap  tileMap,
             TilesetList* tilesets
         );
 
@@ -62,7 +62,7 @@ class TitleLayer : public Layer
          *
          * @return
          */
-        [[nodiscard]] TileMap& getTileMap() const;
+        [[nodiscard]] TileMap getTileMap() const;
 
         /**
          * Get this layers list of tilesets
@@ -95,7 +95,7 @@ class TitleLayer : public Layer
         /**
          * The tile map matrix
          */
-        TileMap* tileMap;
+        TileMap tileMap;
 
         /**
          * The tilesets in this layer
