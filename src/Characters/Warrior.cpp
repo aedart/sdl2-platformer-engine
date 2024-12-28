@@ -81,6 +81,11 @@ void Warrior::update(const float delta)
     this->transform->translateX(this->rigidBody->getPosition().x); // x-axis only
     // this->transform->translateY(this->rigidBody->getPosition().y); // y-axis only, e.g. gravity
 
+    // Update character's current position
+    this->position->x = this->transform->x + this->width / 2;
+    this->position->y = this->transform->y + this->height / 2;
+
+    // Finally, update the animation.
     this->animation->update();
 }
 
