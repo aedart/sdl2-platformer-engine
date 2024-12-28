@@ -155,10 +155,16 @@ class Engine
          * @param title Window title
          * @param width Window width in pixels
          * @param height Window height in pixels
+         * @param flags SDL window flags
          *
          * @return
          */
-        SDL_Window* makeWindow(const char* title, int width, int height);
+        SDL_Window* makeWindow(
+            const char* title,
+            int width,
+            int height,
+            SDL_WindowFlags flags = SDL_WINDOW_SHOWN
+        );
 
         /**
          * Returns a new SDL renderer

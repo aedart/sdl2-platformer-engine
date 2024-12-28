@@ -110,7 +110,8 @@ bool Engine::init(const char *title, const int width, const int height)
     this->screenHeight = height;
 
     // Create SDL window
-    this->window = this->makeWindow(title, this->screenWidth, this->screenHeight);
+    constexpr auto WINDOW_FLAGS = static_cast<SDL_WindowFlags>(SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+    this->window = this->makeWindow(title, this->screenWidth, this->screenHeight, WINDOW_FLAGS);
     if (this->window == nullptr) {
         SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "Failed to create window: %s", SDL_GetError());
         return this->running = false;
@@ -248,15 +249,19 @@ int Engine::getScreenHeight() const
 // Internals
 // -----------------------------------------------------------------------------
 
-SDL_Window* Engine::makeWindow(const char* title, const int width, const int height)
-{
+SDL_Window* Engine::makeWindow(
+    const char* title,
+    const int width,
+    const int height,
+    const SDL_WindowFlags flags
+){
     return SDL_CreateWindow(
         title,
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         width,
         height,
-        SDL_WINDOW_SHOWN
+        flags
     );
 }
 
