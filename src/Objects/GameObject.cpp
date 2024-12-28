@@ -21,7 +21,7 @@ GameObject::GameObject(const Properties* properties)
     this->position = new Point(px, py);
 }
 
-Point& GameObject::getPosition() const
+Point* GameObject::getPosition() const
 {
-    return *position;
+    return this->position;
 }

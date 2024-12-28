@@ -48,7 +48,7 @@ class GameObject: public ObjectInterface
          *
          * @return
          */
-        [[nodiscard]] Point& getPosition() const;
+        [[nodiscard]] Point* getPosition() const;
 
     protected:
         /**
