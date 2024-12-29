@@ -25,6 +25,9 @@ class Collider
         /**
          * Set the collider box
          *
+         * Note: The buffer is automatically subtracted from given
+         * box position and dimensions.
+         *
          * @param x X position
          * @param y Y position
          * @param w Width
@@ -41,6 +44,9 @@ class Collider
 
         /**
          * Set the collider buffer
+         *
+         * Note: The box's positions and dimensions are NOT
+         * automatically updated when a new buffer is set!
          *
          * @param x X position
          * @param y Y position
