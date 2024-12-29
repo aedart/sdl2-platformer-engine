@@ -71,6 +71,34 @@ class TileLayer : public Layer
          */
         [[nodiscard]] TilesetList getTilesetsList() const;
 
+        /**
+         * Get the tile width in pixels
+         *
+         * @return
+         */
+        [[nodiscard]] int getTileWidth() const;
+
+        /**
+         * Get the tile height in pixels
+         *
+         * @return
+         */
+        [[nodiscard]] int getTileHeight() const;
+
+        /**
+         * Get the amount of rows in this layer
+         *
+         * @return
+         */
+        [[nodiscard]] int getRows() const;
+
+        /**
+         * Get the amount of columns in this layer
+         *
+         * @return
+         */
+        [[nodiscard]] int getColumns() const;
+
     protected:
         /**
          * Width of the tiles in this layer, in pixels

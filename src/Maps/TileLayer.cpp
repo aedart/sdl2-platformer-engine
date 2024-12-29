@@ -104,3 +104,23 @@ TilesetList TileLayer::getTilesetsList() const
 {
     return this->tilesets;
 }
+
+int TileLayer::getTileWidth() const
+{
+    return this->tileWidth;
+}
+
+int TileLayer::getTileHeight() const
+{
+    return this->tileHeight;
+}
+
+int TileLayer::getRows() const
+{
+    return this->rows;
+}
+
+int TileLayer::getColumns() const
+{
+    return this->columns;
+}
