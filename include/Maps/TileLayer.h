@@ -19,11 +19,11 @@ using TileMap =
                                      // (not sure why...)!
 
 /**
- * Title Layer
+ * Tile Layer
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class TitleLayer : public Layer
+class TileLayer : public Layer
 {
     public:
         /**
@@ -36,7 +36,7 @@ class TitleLayer : public Layer
          * @param tileMap The tile map matrix
          * @param tilesets List of tilesets
          */
-        TitleLayer(
+        TileLayer(
             int tileWidth,
             int tileHeight,
             int rows,

@@ -1,11 +1,11 @@
-#include "Maps/TitleLayer.h"
+#include "Maps/TileLayer.h"
 #include "Maps/Tileset.h"
 #include "Graphics/TextureManager.h"
 
 #include <iostream>
 #include <utility>
 
-TitleLayer::TitleLayer(
+TileLayer::TileLayer(
     const int tileWidth,
     const int tileHeight,
     const int rows,
@@ -28,7 +28,7 @@ TitleLayer::TitleLayer(
     }
 }
 
-void TitleLayer::render()
+void TileLayer::render()
 {
     auto& manager = TextureManager::getInstance();
 
@@ -87,7 +87,7 @@ void TitleLayer::render()
     }
 }
 
-void TitleLayer::update(float delta)
+void TileLayer::update(float delta)
 {
     // TODO:
 
@@ -95,12 +95,12 @@ void TitleLayer::update(float delta)
     // std::cout << __PRETTY_FUNCTION__ << std::endl;
 }
 
-TileMap TitleLayer::getTileMap() const
+TileMap TileLayer::getTileMap() const
 {
     return this->tileMap;
 }
 
-TilesetList TitleLayer::getTilesetsList() const
+TilesetList TileLayer::getTilesetsList() const
 {
     return this->tilesets;
 }

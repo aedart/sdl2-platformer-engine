@@ -11,7 +11,7 @@
 #include <iostream>
 
 #include "Maps/GameMap.h"
-#include "Maps/TitleLayer.h"
+#include "Maps/TileLayer.h"
 #include "Maps/Tileset.h"
 
 Parser& Parser::getInstance()
@@ -173,7 +173,7 @@ Tileset* Parser::parseTileset(const tinyxml2::XMLElement* element)
     );
 }
 
-TitleLayer* Parser::parseTitleLayer(
+TileLayer* Parser::parseTitleLayer(
     const tinyxml2::XMLElement* element,
     const TilesetList& tilesets,
     const int tileWidth,
@@ -213,7 +213,7 @@ TitleLayer* Parser::parseTitleLayer(
     }
 
     // Finally, return a new Tile Layer instance
-    return new TitleLayer(
+    return new TileLayer(
         tileWidth,
         tileHeight,
         rows,

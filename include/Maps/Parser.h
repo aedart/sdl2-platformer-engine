@@ -7,7 +7,7 @@
 #include <string>
 
 #include "Maps/GameMap.h"
-#include "Maps/TitleLayer.h"
+#include "Maps/TileLayer.h"
 #include "Maps/Tileset.h"
 
 /**
@@ -127,7 +127,7 @@ class Parser
          *
          * @return A pointer to a new tile layer instance
          */
-        TitleLayer* parseTitleLayer(
+        TileLayer* parseTitleLayer(
             const tinyxml2::XMLElement* element,
             const TilesetList& tilesets,
             int tileWidth,
