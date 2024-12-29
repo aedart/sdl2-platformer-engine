@@ -143,6 +143,7 @@ bool Engine::init(const char *title, const int width, const int height)
     // TODO: ...
     TextureManager::getInstance().load("warrior_idle", "resources/characters/punk/Punk_idle.png");
     TextureManager::getInstance().load("warrior_run", "resources/characters/punk/Punk_run.png");
+    TextureManager::getInstance().load("warrior_jump", "resources/characters/punk/Punk_jump.png");
     player = new Warrior(new Properties(
         "warrior_idle",
         48,
