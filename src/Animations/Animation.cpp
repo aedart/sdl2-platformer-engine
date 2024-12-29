@@ -10,12 +10,7 @@ void Animation::update()
 {
     // TODO: Take delta into account?
 
-    int frame = (SDL_GetTicks() / this->animationSpeed) % this->amountFrames;
-    if (frame == 0) {
-        frame = this->column;
-    }
-
-    this->frame = frame;
+    this->frame = (SDL_GetTicks() / this->animationSpeed) % this->amountFrames;
 }
 
 void Animation::draw(
@@ -33,7 +28,7 @@ void Animation::draw(
         width,
         height,
         this->row,
-        this->frame,
+        this->column + this->frame,
         flip
     );
 }
