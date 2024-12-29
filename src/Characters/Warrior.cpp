@@ -1,17 +1,31 @@
+#include "Characters/Warrior.h"
+
 #include <SDL2/SDL.h>
 
+#include "Animations/Animation.h"
 #include "Characters/Character.h"
 #include "Graphics/TextureManager.h"
-#include "Objects/Properties.h"
+#include "Core/Engine.h"
+#include "Cameras/Camera.h"
 #include "Inputs/InputHandler.h"
-#include "Animations/Animation.h"
-#include "Characters/Warrior.h"
+#include "Objects/Properties.h"
+#include "Physics/Collider.h"
+#include "Physics/Vector2D.h"
+#include "Collisions/CollisionHandler.h"
 
 Warrior::Warrior(const Properties* properties) : Character(properties)
 {
     this->name = "Warrior";
 
+    this->jumpTime = Warrior::DEFAULT_JUMP_TIME;
+    this->jumpForce = Warrior::DEFAULT_JUMP_FORCE;
+    this->isJumping = true;
+    this->isGrounded = false;
+
+    this->collider = new Collider();
+
     this->rigidBody = new RigidBody();
+    this->rigidBody->setGravity(3.0f);
 
     // TODO: Idle animation
     this->animation = new Animation();
@@ -29,6 +43,7 @@ void Warrior::update(const float delta)
     // TODO: handle delta
 
     const InputHandler& input = InputHandler::getInstance();
+    const CollisionHandler& collisionHandler = CollisionHandler::getInstance();
 
     // Idle
     this->rigidBody->unsetForce();
@@ -73,13 +88,58 @@ void Warrior::update(const float delta)
         );
     }
 
+    // Jump
+    constexpr auto jumpKey = SDL_SCANCODE_SPACE;
+    if (input.isKeyDown(jumpKey) && this->isGrounded) {
+        this->isJumping = true;
+        this->isGrounded = false;
+        this->rigidBody->applyForceUpward(this->jumpForce);
+    }
+    if (input.isKeyDown(jumpKey) && this->isJumping && this->jumpTime > 0) {
+        this->jumpTime -= delta;
+        this->rigidBody->applyForceUpward(this->jumpForce);
+    } else {
+        this->isJumping = false;
+        this->jumpTime = Warrior::DEFAULT_JUMP_TIME;
+    }
+
     // Compute acceleration, velocity and position
     this->rigidBody->update(delta);
 
-    // Update characters position
-    // this->transform->translate(this->rigidBody->getPosition()); // x and y-axis
-    this->transform->translateX(this->rigidBody->getPosition().x); // x-axis only
-    // this->transform->translateY(this->rigidBody->getPosition().y); // y-axis only, e.g. gravity
+    // Move on x-axis
+    this->rigidBody->update(delta);
+    this->lastSafePosition.x = this->transform->x;
+    this->transform->x += this->rigidBody->getPosition().x;
+    this->collider->setBox(this->transform->x, this->transform->y, 96, 96); // TODO: Why hard-coded values here...!?
+
+    if (collisionHandler.mapCollision(this->collider->getBox())) {
+        this->transform->x = this->lastSafePosition.x;
+    }
+
+    // Move on y-axis
+    this->rigidBody->update(delta);
+    this->lastSafePosition.y = this->transform->y;
+    this->transform->y += this->rigidBody->getPosition().y;
+    this->collider->setBox(this->transform->x, this->transform->y, 96, 96); // TODO: Why hard-coded values here...!?
+
+    if (collisionHandler.mapCollision(this->collider->getBox())) {
+        this->transform->y = this->lastSafePosition.y;
+        this->isGrounded = true;
+    } else {
+        this->isGrounded = false;
+    }
+
+    // Set jump animation
+    if (this->isJumping || !this->isGrounded) {
+        // TODO: Strange animation here... 4 frames total, but last two are "falling"...
+        this->animation->setProperties(
+            "warrior_jump",
+            0,
+            2,
+            80,
+            this->flip
+        );
+    }
 
     // Update character's current position
     this->position->x = this->transform->x + this->width / 2;
@@ -91,17 +151,26 @@ void Warrior::update(const float delta)
 
 void Warrior::draw()
 {
-    // TODO: Need to handle multiple types of animation...
+    // Draw the current animation
     this->animation->draw(
         this->transform->x,
         this->transform->y,
         this->width,
         this->height
     );
+
+    // TODO: Draw a rect around the character and follow...
+    Vector2D camaraPosition = Camera::getInstance().getPosition();
+
+    auto box = this->collider->getBox();
+    box.x -= camaraPosition.x;
+    box.y -= camaraPosition.y;
+
+    SDL_RenderDrawRect(Engine::getInstance().getRenderer(), &box);
 }
 
 void Warrior::clean()
 {
-    // TODO: Uhm... this seems really heavy!
-    TextureManager::getInstance().clean();
+    // TODO: Beneficial to drop the characters sprites here?
+    // TextureManager::getInstance().clean();
 }
