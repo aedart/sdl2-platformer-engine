@@ -50,10 +50,10 @@ void TileLayer::render()
             if (tilesetList.size() > 1) {
                 // Because of the structure of "tiled" map, we need to re-resolve the tile ID
                 // as well as the index of the tileset, or the wrong image / tile will be drawn!
-                for (int i = 1; i < tilesetList.size(); i++) {
+                for (int i = 0; i < tilesetList.size(); i++) {
 
                     // If tile ID is inside the current tileset...
-                    if (tileID > tilesetList[i]->firstID && tileID < tilesetList[i]->lastID) {
+                    if (tileID >= tilesetList[i]->firstID && tileID <= tilesetList[i]->lastID) {
                         tileID = tileID + tilesetList[i]->tilesCount - tilesetList[i]->lastID;
                         tilesetIndex = i;
                         break;
