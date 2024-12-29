@@ -17,12 +17,20 @@ Warrior::Warrior(const Properties* properties) : Character(properties)
 {
     this->name = "Warrior";
 
+    this->isRunning = false;
+    this->isJumping = false;
+    this->isFalling = false;
+    this->isGrounded = false;
+    this->isAttacking = false;
+
+    this->flip = SDL_FLIP_NONE;
     this->jumpTime = Warrior::DEFAULT_JUMP_TIME;
     this->jumpForce = Warrior::DEFAULT_JUMP_FORCE;
-    this->isJumping = true;
-    this->isGrounded = false;
+    this->attackTime = Warrior::DEFAULT_ATTACK_TIME;
+    this->runForce = Warrior::DEFAULT_RUN_FORCE;
 
     this->collider = new Collider();
+    this->collider->setBuffer(-4, -8, 28, 10);
 
     this->rigidBody = new RigidBody();
     this->rigidBody->setGravity(3.0f);
@@ -31,10 +39,8 @@ Warrior::Warrior(const Properties* properties) : Character(properties)
     this->animation = new Animation();
     this->animation->setProperties(
         this->textureID,
-        0,
         4,
-        120,
-        this->flip
+        120
     );
 }
 
@@ -45,51 +51,35 @@ void Warrior::update(const float delta)
     const InputHandler& input = InputHandler::getInstance();
     const CollisionHandler& collisionHandler = CollisionHandler::getInstance();
 
-    // Idle
-    this->rigidBody->unsetForce();
-    this->animation->setProperties(
-        "warrior_idle",
-        0,
-        4,
-        120,
-        this->flip
-    );
+    this->isRunning = false;
 
-    // TODO: Uhm... yea... this should be elsewhere defined.
-    const int moveSpeed = 5;
+    // Unset any previous applied force
+    this->rigidBody->unsetForce();
 
     // Move left
-    if (input.isKeyDown(SDL_SCANCODE_A)) {
-        this->rigidBody->applyForceBackward(moveSpeed);
-
+    if (input.isKeyDown(SDL_SCANCODE_A) && !this->isAttacking) {
+        this->rigidBody->applyForceBackward(this->runForce);
         this->flip = SDL_FLIP_HORIZONTAL;
-
-        this->animation->setProperties(
-            "warrior_run",
-            0,
-            6,
-            120,
-            this->flip
-        );
+        this->isRunning = true;
     }
 
     // Move right
-    if (input.isKeyDown(SDL_SCANCODE_D)) {
-        this->rigidBody->applyForceForward(moveSpeed);
-
+    if (input.isKeyDown(SDL_SCANCODE_D) && !this->isAttacking) {
+        this->rigidBody->applyForceForward(this->runForce);
         this->flip = SDL_FLIP_NONE;
+        this->isRunning = true;
+    }
 
-        this->animation->setProperties(
-            "warrior_run",
-            0,
-            6,
-            120,
-            this->flip
-        );
+    // Crouch (down)?
+
+    // Attack
+    if (input.isKeyDown(SDL_SCANCODE_SPACE)) {
+        this->rigidBody->unsetForce();
+        this->isAttacking = true;
     }
 
     // Jump
-    constexpr auto jumpKey = SDL_SCANCODE_SPACE;
+    constexpr auto jumpKey = SDL_SCANCODE_W;
     if (input.isKeyDown(jumpKey) && this->isGrounded) {
         this->isJumping = true;
         this->isGrounded = false;
@@ -103,14 +93,22 @@ void Warrior::update(const float delta)
         this->jumpTime = Warrior::DEFAULT_JUMP_TIME;
     }
 
-    // Compute acceleration, velocity and position
-    this->rigidBody->update(delta);
+    // Fall
+    this->isFalling = this->rigidBody->getVelocity().y > 0 && !this->isGrounded;
+
+    // Attack timer
+    if (this->isAttacking && this->attackTime > 0) {
+        this->attackTime -= delta;
+    } else {
+        this->isAttacking = false;
+        this->attackTime = Warrior::DEFAULT_ATTACK_TIME;
+    }
 
     // Move on x-axis
     this->rigidBody->update(delta);
     this->lastSafePosition.x = this->transform->x;
     this->transform->x += this->rigidBody->getPosition().x;
-    this->collider->setBox(this->transform->x, this->transform->y, 96, 96); // TODO: Why hard-coded values here...!?
+    this->collider->setBox(this->transform->x, this->transform->y, this->width, this->height);
 
     if (collisionHandler.mapCollision(this->collider->getBox())) {
         this->transform->x = this->lastSafePosition.x;
@@ -120,7 +118,7 @@ void Warrior::update(const float delta)
     this->rigidBody->update(delta);
     this->lastSafePosition.y = this->transform->y;
     this->transform->y += this->rigidBody->getPosition().y;
-    this->collider->setBox(this->transform->x, this->transform->y, 96, 96); // TODO: Why hard-coded values here...!?
+    this->collider->setBox(this->transform->x, this->transform->y, this->width, this->height);
 
     if (collisionHandler.mapCollision(this->collider->getBox())) {
         this->transform->y = this->lastSafePosition.y;
@@ -129,23 +127,12 @@ void Warrior::update(const float delta)
         this->isGrounded = false;
     }
 
-    // Set jump animation
-    if (this->isJumping || !this->isGrounded) {
-        // TODO: Strange animation here... 4 frames total, but last two are "falling"...
-        this->animation->setProperties(
-            "warrior_jump",
-            0,
-            2,
-            80,
-            this->flip
-        );
-    }
-
     // Update character's current position
     this->position->x = this->transform->x + this->width / 2;
     this->position->y = this->transform->y + this->height / 2;
 
     // Finally, update the animation.
+    this->resolveAnimation();
     this->animation->update();
 }
 
@@ -156,10 +143,11 @@ void Warrior::draw()
         this->transform->x,
         this->transform->y,
         this->width,
-        this->height
+        this->height,
+        this->flip
     );
 
-    // TODO: Draw a rect around the character and follow...
+    // Debug Draw the collider box around the character
     Vector2D camaraPosition = Camera::getInstance().getPosition();
 
     auto box = this->collider->getBox();
@@ -173,4 +161,62 @@ void Warrior::clean()
 {
     // TODO: Beneficial to drop the characters sprites here?
     // TextureManager::getInstance().clean();
+}
+
+// -----------------------------------------------------------------------------
+// Internals
+// -----------------------------------------------------------------------------
+
+void Warrior::resolveAnimation()
+{
+    // TODO: uhm... yea, this is not that nice, but it gets the job done.
+
+    // idle
+    this->animation->setProperties(
+        "warrior_idle",
+        4,
+        120
+    );
+
+    // running
+    if (this->isRunning) {
+        this->animation->setProperties(
+            "warrior_run",
+            6,
+            120
+        );
+    }
+
+    // crouching?
+
+    // jumping
+    if (this->isJumping) {
+        // Play first part in sprite sheet
+        this->animation->setProperties(
+            "warrior_jump",
+            2,
+            65
+        );
+    }
+
+    // falling
+    if (this->isFalling) {
+        // Play second part in sprite sheet
+        this->animation->setProperties(
+            "warrior_jump",
+            2,
+            65,
+            0,
+            2
+        );
+    }
+
+    // attacking
+    if (this->isAttacking) {
+        this->animation->setProperties(
+            "warrior_attack",
+            8,
+            150
+        );
+    }
 }

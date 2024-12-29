@@ -27,6 +27,16 @@ class Warrior : public Character
         static constexpr float DEFAULT_JUMP_FORCE = 10.0f;
 
         /**
+         * Default run force
+         */
+        static constexpr float DEFAULT_RUN_FORCE = 4.0f;
+
+        /**
+         * Default attack time
+         */
+        static constexpr float DEFAULT_ATTACK_TIME = 20.0f;
+
+        /**
          * Constructor
          *
          * @param properties
@@ -73,16 +83,6 @@ class Warrior : public Character
         Vector2D lastSafePosition;
 
         /**
-         * State, if character is jumping
-         */
-        bool isJumping;
-
-        /**
-         * State, if character is on the ground
-         */
-        bool isGrounded;
-
-        /**
          * The jump time of this character
          */
         float jumpTime;
@@ -91,6 +91,46 @@ class Warrior : public Character
          * The jump force of this character
          */
         float jumpForce;
+
+        /**
+         * The attack time of this character
+         */
+        float attackTime;
+
+        /**
+         * Run force
+         */
+        float runForce;
+
+        /**
+         * State, if character is running
+         */
+        bool isRunning;
+
+        /**
+         * State, if character is jumping
+         */
+        bool isJumping;
+
+        /**
+         * State, if character is falling
+         */
+        bool isFalling;
+
+        /**
+         * State, if character is on the ground
+         */
+        bool isGrounded;
+
+        /**
+         * State, if character is attacking
+         */
+        bool isAttacking;
+
+        /**
+         * Sets the animation according to its current state
+         */
+        void resolveAnimation();
 };
 
 #endif  // CHARACTERS_WARRIOR_H
