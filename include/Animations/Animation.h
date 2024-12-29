@@ -29,24 +29,31 @@ class Animation
          * @param y Y position in sprite
          * @param width Sprite width
          * @param height Sprite height
+         * @param flip Flip mode
          */
-        void draw(float x, float y, float width, float height) const;
+        void draw(
+            float x,
+            float y,
+            float width,
+            float height,
+            SDL_RendererFlip flip = SDL_FLIP_NONE
+        ) const;
 
         /**
          * Set this animation's properties
          *
          * @param textureID The id of the texture
-         * @param row Row in sprite (x-axis)
          * @param amountFrames Total amount of frames of this animation
          * @param animationSpeed The speed of the animation
-         * @param flip Flip mode
+         * @param row Row in sprite (y-axis)
+         * @param column column in spite (x-axis - the start frame)
          */
         void setProperties(
             const std::string& textureID,
-            int row,
             int amountFrames,
             int animationSpeed,
-            SDL_RendererFlip flip = SDL_FLIP_NONE
+            int row = 0,
+            int column = 0
         );
 
     protected:
@@ -59,6 +66,11 @@ class Animation
          * The sprite row
          */
         int row;
+
+        /**
+         * The sprite column (the start frame)
+         */
+        int column;
 
         /**
          * The current frame to be drawn
@@ -74,11 +86,6 @@ class Animation
          * The animation speed
          */
         int animationSpeed;
-
-        /**
-         * Flip mode (orientation) of this animation
-         */
-        SDL_RendererFlip flip;
 };
 
 #endif  // ANIMATIONS_ANIMATION_H

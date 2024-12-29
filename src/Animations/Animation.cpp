@@ -8,12 +8,23 @@ Animation::Animation() {}
 
 void Animation::update()
 {
-    // TODO: Need to take delta into account.
+    // TODO: Take delta into account?
 
-    this->frame = (SDL_GetTicks() / this->animationSpeed) % this->amountFrames;
+    int frame = (SDL_GetTicks() / this->animationSpeed) % this->amountFrames;
+    if (frame == 0) {
+        frame = this->column;
+    }
+
+    this->frame = frame;
 }
 
-void Animation::draw(const float x, const float y, const float width, const float height) const
+void Animation::draw(
+    const float x,
+    const float y,
+    const float width,
+    const float height,
+    const SDL_RendererFlip flip
+) const
 {
     TextureManager::getInstance().drawFrame(
         this->textureID,
@@ -23,20 +34,20 @@ void Animation::draw(const float x, const float y, const float width, const floa
         height,
         this->row,
         this->frame,
-        this->flip
+        flip
     );
 }
 
 void Animation::setProperties(
     const std::string& textureID,
-    const int row,
     const int amountFrames,
     const int animationSpeed,
-    const SDL_RendererFlip flip
+    const int row,
+    const int column
 ) {
     this->textureID = textureID;
-    this->row = row;
     this->amountFrames = amountFrames;
     this->animationSpeed = animationSpeed;
-    this->flip = flip;
+    this->row = row;
+    this->column = column;
 }
