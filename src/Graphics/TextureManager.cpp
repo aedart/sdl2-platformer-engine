@@ -4,6 +4,8 @@
 
 #include "Graphics/TextureManager.h"
 #include "Core/Engine.h"
+#include "Cameras/Camera.h"
+#include "Physics/Vector2D.h"
 
 TextureManager& TextureManager::getInstance()
 {
@@ -106,8 +108,16 @@ void TextureManager::drawFrame(
     // The source of the texture we wish to draw (row and frame)
     const SDL_Rect source = {width * frame, height * row, width, height};
 
-    // The destination on screen where the texture must be drawn
-    const SDL_Rect dest = {x, y, width, height};
+    // Obtain the camera's position, such that the destination of the texture can
+    // be drawn correctly, with respect to what the camera's is viewing.
+    const auto cameraPosition = Camera::getInstance().getPosition();
+    // const SDL_Rect dest = {x, y, width, height}; // Original without camera...
+    const SDL_Rect dest = {
+        static_cast<int>(x - cameraPosition.x),
+        static_cast<int>(y - cameraPosition.y),
+        width,
+        height
+    };
 
     const auto success = SDL_RenderCopyEx(
         Engine::getInstance().getRenderer(),
