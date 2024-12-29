@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="Exclusion Zone" tilewidth="32" tileheight="32" tilecount="81" columns="9">
   <image source="../tilesets/exclusion-zone/tiles/Tileset.png" width="288" height="288"/>
  </tileset>
- <tileset firstgid="82" name="collision_tileset" tilewidth="32" tileheight="32" tilecount="9" columns="3">
+ <tileset firstgid="82" name="Collision Tileset" tilewidth="32" tileheight="32" tilecount="9" columns="3">
   <image source="../misc/collision_tileset.png" width="96" height="96"/>
  </tileset>
  <layer id="1" name="terrain" width="60" height="20" locked="1">
