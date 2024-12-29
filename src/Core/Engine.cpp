@@ -138,6 +138,9 @@ bool Engine::init(const char *title, const int width, const int height)
     this->currentMap = mapParser.get(mapID);
 
     // TODO: ...
+    TextureManager::getInstance().load("bg", "resources/tilesets/exclusion-zone/backgrounds/day/2.png");
+
+    // TODO: ...
     TextureManager::getInstance().load("warrior_idle", "resources/characters/punk/Punk_idle.png");
     TextureManager::getInstance().load("warrior_run", "resources/characters/punk/Punk_run.png");
     player = new Warrior(new Properties(
@@ -217,6 +220,10 @@ void Engine::render()
     // Clean previous rendering
     SDL_RenderClear(this->renderer);
 
+    // TODO:
+    TextureManager::getInstance().draw("bg", 0, 0, 576 * 1.5, 324 * 1.5);
+    // TODO: end
+
     // Render the current map
     this->currentMap->render();
 
@@ -247,9 +254,15 @@ int Engine::getScreenWidth() const
 {
     return this->screenWidth;
 }
+
 int Engine::getScreenHeight() const
 {
     return this->screenHeight;
+}
+
+GameMap* Engine::getCurrentMap() const
+{
+    return this->currentMap;
 }
 
 // -----------------------------------------------------------------------------

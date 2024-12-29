@@ -113,6 +113,13 @@ class Engine
          */
         [[nodiscard]] int getScreenHeight() const;
 
+        /**
+         * Get the current map
+         *
+         * @return
+         */
+        [[nodiscard]] GameMap* getCurrentMap() const;
+
     protected:
         /**
          * Running state of this engine
