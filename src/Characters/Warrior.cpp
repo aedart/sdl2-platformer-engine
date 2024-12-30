@@ -57,6 +57,7 @@ void Warrior::update(const float delta)
 
         // Given the sprite sheet that is used, a collider buffer must be set... (mirrored)
         this->collider->setBuffer(-28, -12, 34, 14);
+        // TODO: Since buffer is now mirror, there is a risk that character gets stuck in wall!
     }
 
     // Move right
@@ -67,6 +68,7 @@ void Warrior::update(const float delta)
 
         // Given the sprite sheet that is used, a collider buffer must be set...
         this->collider->setBuffer(-6, -12, 34, 14);
+        // TODO: Since buffer is now reset, there is a risk that character gets stuck in wall!
     }
 
     // Crouch (down)?
