@@ -8,7 +8,6 @@
 #include "Graphics/TextureRenderProperties.h"
 #include "Core/Engine.h"
 #include "Cameras/Camera.h"
-#include "Physics/Vector2D.h"
 
 TextureManager& TextureManager::getInstance()
 {
