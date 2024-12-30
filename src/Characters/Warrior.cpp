@@ -194,7 +194,10 @@ void Warrior::resolveAnimation()
         this->animation->setProperties(
             "warrior_jump",
             2,
-            65
+            65,
+            0,
+            0,
+            false
         );
     }
 
@@ -206,7 +209,8 @@ void Warrior::resolveAnimation()
             2,
             65,
             0,
-            2
+            2,
+            false
         );
     }
 
