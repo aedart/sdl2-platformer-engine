@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<textures>
+
+    <!-- Warrior -->
+    <texture id="warrior_idle" source="resources/characters/punk/Punk_idle.png" />
+    <texture id="warrior_run" source="resources/characters/punk/Punk_run.png" />
+    <texture id="warrior_jump" source="resources/characters/punk/Punk_jump.png" />
+    <texture id="warrior_attack" source="resources/characters/punk/Punk_attack2.png" />
+
+    <!-- Backgrounds -->
+    <texture id="bg" source="resources/tilesets/exclusion-zone/backgrounds/day/2.png" />
+
+</textures>
