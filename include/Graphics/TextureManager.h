@@ -72,7 +72,7 @@ class TextureManager
         /**
          * Draw a texture
          *
-         * @ param properties Rendering properties of texture
+         * @param properties Rendering properties of texture
          */
         void draw(const TextureRenderProperties& properties);
 
