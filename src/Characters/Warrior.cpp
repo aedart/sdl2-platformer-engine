@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "Animations/Animation.h"
+#include "Animations/SpriteAnimation.h"
 #include "Characters/Character.h"
 #include "Graphics/TextureManager.h"
 #include "Core/Engine.h"
@@ -35,7 +35,7 @@ Warrior::Warrior(const Properties* properties) : Character(properties)
     this->rigidBody = new RigidBody();
     this->rigidBody->setGravity(3.0f);
 
-    this->animation = new Animation();
+    this->animation = new SpriteAnimation();
 }
 
 void Warrior::update(const float delta)
@@ -135,7 +135,7 @@ void Warrior::update(const float delta)
 
     // Finally, update the animation.
     this->resolveAnimation();
-    this->animation->update();
+    this->animation->update(delta);
 }
 
 void Warrior::draw()
@@ -146,6 +146,8 @@ void Warrior::draw()
         this->transform->y,
         this->width,
         this->height,
+        1.0,
+        1.0,
         this->flip
     );
 
@@ -179,6 +181,7 @@ void Warrior::resolveAnimation()
         4,
         120
     );
+    this->animation->setRepeat(true);
 
     // running
     if (this->isRunning) {
@@ -197,11 +200,9 @@ void Warrior::resolveAnimation()
         this->animation->setProperties(
             "warrior_jump",
             2,
-            65,
-            0,
-            0,
-            false
+            65
         );
+        this->animation->setRepeat(false);
     }
 
     // falling
@@ -212,9 +213,9 @@ void Warrior::resolveAnimation()
             2,
             65,
             0,
-            2,
-            false
+            2
         );
+        this->animation->setRepeat(false);
     }
 
     // attacking

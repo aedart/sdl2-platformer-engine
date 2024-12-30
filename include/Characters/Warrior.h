@@ -3,7 +3,7 @@
 
 #include "Characters/Character.h"
 #include "Objects/Properties.h"
-#include "Animations/Animation.h"
+#include "Animations/SpriteAnimation.h"
 #include "Physics/RigidBody.h"
 #include "Physics/Collider.h"
 #include "Physics/Vector2D.h"
@@ -64,7 +64,7 @@ class Warrior : public Character
         /**
          * The current animation of this character
          */
-        Animation* animation;
+        SpriteAnimation* animation;
 
         /**
          * The rigid body of this character
