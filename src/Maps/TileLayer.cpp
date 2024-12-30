@@ -35,8 +35,8 @@ void TileLayer::render()
     const auto tileMap = this->tileMap;
     const auto tilesetList = this->tilesets;
 
-    for (unsigned int row = 0; row < this->rows; row++) {
-        for (unsigned int column = 0; column < this->columns; column++) {
+    for (int row = 0; row < this->rows; row++) {
+        for (int column = 0; column < this->columns; column++) {
             int tileID = tileMap[row][column];
 
             // Skip if tile ID is zero (nothing)
@@ -74,15 +74,15 @@ void TileLayer::render()
             }
 
             // Finally, draw the tile...
-            manager.drawTile(
-                tileset->name,
-                column * this->tileWidth, // NOTE: Use layer's tile size here!
-                row * this->tileHeight, // NOTE: Use layer's tile size here!
-                tileset->tileWidth,
-                tileset->tileHeight,
-                tileRow,
-                tileColumn
-            );
+            manager.drawTile({
+                .id = tileset->name,
+                .x = column * this->tileWidth, // NOTE: Use layer's tile size here!
+                .y = row * this->tileHeight, // NOTE: Use layer's tile size here!
+                .width = this->tileWidth,
+                .height = this->tileHeight,
+                .row = tileRow,
+                .column = tileColumn,
+            });
         }
     }
 }

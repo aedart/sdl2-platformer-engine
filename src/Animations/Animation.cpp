@@ -32,16 +32,16 @@ void Animation::draw(
     const SDL_RendererFlip flip
 ) const
 {
-    TextureManager::getInstance().drawFrame(
-        this->textureID,
-        x,
-        y,
-        width,
-        height,
-        this->row,
-        this->column + this->frame,
-        flip
-    );
+    TextureManager::getInstance().drawFrame({
+        .id = this->textureID,
+        .x = static_cast<int>(x),
+        .y = static_cast<int>(y),
+        .width = static_cast<int>(width),
+        .height = static_cast<int>(height),
+        .row = this->row,
+        .column = this->column + this->frame,
+        .flip = flip,
+    });
 }
 
 void Animation::setProperties(
