@@ -2,6 +2,8 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 
+#include <tinyxml2.h>
+
 #include "Graphics/TextureManager.h"
 #include "Core/Engine.h"
 #include "Cameras/Camera.h"
@@ -49,6 +51,40 @@ bool TextureManager::load(const std::string& id, const std::string& file)
 
     // Save reference to texture in map
     this->textures[id] = texture;
+
+    return true;
+}
+
+bool TextureManager::parseTexture(const std::string& source)
+{
+    tinyxml2::XMLDocument document;
+
+    // Attempt to load the source xml document.
+    document.LoadFile(source.c_str());
+    if (document.Error()) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to load texture file (ID %s): %s", source.c_str(), document.ErrorStr());
+        return false;
+    }
+
+    // Obtain the root element (<map> element)
+    const tinyxml2::XMLElement* root = document.RootElement();
+    if (root == nullptr) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture file is empty: %s", source.c_str());
+        return false;
+    }
+
+    // Loop through each defined texture and load them.
+    for (const tinyxml2::XMLElement* element = root->FirstChildElement(); element != nullptr; element = element->NextSiblingElement()) {
+        // Cast node's name to string for comparison...
+        const std::string node = element->Name();
+
+        if (node == "texture") {
+            const std::string id = element->Attribute("id");
+            const std::string src = element->Attribute("source");
+
+            this->load(id, src);
+        }
+    }
 
     return true;
 }

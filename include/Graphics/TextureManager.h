@@ -54,6 +54,15 @@ class TextureManager
         bool load(const std::string& id, const std::string& file);
 
         /**
+         * Parse the given texture file
+         *
+         * @param source The source of the texture file (xml file)
+         *
+         * @return
+         */
+        bool parseTexture( const std::string& source);
+
+        /**
          * Clean all textures from the memory
          */
         void clean();
