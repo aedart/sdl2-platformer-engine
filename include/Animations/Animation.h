@@ -47,13 +47,16 @@ class Animation
          * @param animationSpeed The speed of the animation
          * @param row Row in sprite (y-axis)
          * @param column column in spite (x-axis - the start frame)
+         * @param loop If true, the animation restarts from its initial frame.
+         *             If false, the animation stops at its last frame
          */
         void setProperties(
             const std::string& textureID,
             int amountFrames,
             int animationSpeed,
             int row = 0,
-            int column = 0
+            int column = 0,
+            bool loop = true
         );
 
     protected:
@@ -86,6 +89,17 @@ class Animation
          * The animation speed
          */
         int animationSpeed;
+
+        /**
+         * State that determines if the animation should
+         * loop.
+         */
+        bool loop;
+
+        /**
+         * The last frame number
+         */
+        int lastFrame;
 };
 
 #endif  // ANIMATIONS_ANIMATION_H

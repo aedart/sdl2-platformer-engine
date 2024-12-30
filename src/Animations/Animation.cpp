@@ -1,7 +1,11 @@
 #include "Animations/Animation.h"
 
-#include <string>
 #include <SDL2/SDL.h>
+
+#include <iostream>
+#include <ostream>
+#include <string>
+
 #include "Graphics/TextureManager.h"
 
 Animation::Animation() {}
@@ -10,6 +14,13 @@ void Animation::update()
 {
     // TODO: Take delta into account?
 
+    // Prevent looping animation, if needed.
+    if (!this->loop && this->frame == this->lastFrame) {
+        this->frame = this->lastFrame;
+        return;
+    }
+
+    // Otherwise, compute the next frame to be rendered
     this->frame = (SDL_GetTicks() / this->animationSpeed) % this->amountFrames;
 }
 
@@ -38,11 +49,17 @@ void Animation::setProperties(
     const int amountFrames,
     const int animationSpeed,
     const int row,
-    const int column
+    const int column,
+    const bool loop
 ) {
     this->textureID = textureID;
     this->amountFrames = amountFrames;
     this->animationSpeed = animationSpeed;
     this->row = row;
     this->column = column;
+    this->loop = loop;
+    this->lastFrame = this->amountFrames - 1;
+
+    // Debug
+    // std::cout << this->textureID << ", total frames: " << this->amountFrames << ", last frame: " << this->lastFrame << std::endl;
 }
