@@ -30,18 +30,11 @@ Warrior::Warrior(const Properties* properties) : Character(properties)
     this->runForce = Warrior::DEFAULT_RUN_FORCE;
 
     this->collider = new Collider();
-    this->collider->setBuffer(-4, -8, 28, 10);
 
     this->rigidBody = new RigidBody();
     this->rigidBody->setGravity(3.0f);
 
-    // TODO: Idle animation
     this->animation = new Animation();
-    this->animation->setProperties(
-        this->textureID,
-        4,
-        120
-    );
 }
 
 void Warrior::update(const float delta)
@@ -61,6 +54,9 @@ void Warrior::update(const float delta)
         this->rigidBody->applyForceBackward(this->runForce);
         this->flip = SDL_FLIP_HORIZONTAL;
         this->isRunning = true;
+
+        // Given the sprite sheet that is used, a collider buffer must be set... (mirrored)
+        this->collider->setBuffer(-28, -12, 34, 14);
     }
 
     // Move right
@@ -68,6 +64,9 @@ void Warrior::update(const float delta)
         this->rigidBody->applyForceForward(this->runForce);
         this->flip = SDL_FLIP_NONE;
         this->isRunning = true;
+
+        // Given the sprite sheet that is used, a collider buffer must be set...
+        this->collider->setBuffer(-6, -12, 34, 14);
     }
 
     // Crouch (down)?
