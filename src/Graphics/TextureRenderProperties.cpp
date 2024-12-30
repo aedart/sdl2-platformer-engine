@@ -1,48 +1,6 @@
 #include "Graphics/TextureRenderProperties.h"
 
-#include <utility>
-
 #include "Cameras/Camera.h"
-
-TextureRenderProperties::TextureRenderProperties(
-    std::string id,
-    const int x,
-    const int y,
-    const int width,
-    const int height
-) :
-    id(std::move(id)),
-    x(x),
-    y(y),
-    width(width),
-    height(height)
-{
-}
-
-TextureRenderProperties::TextureRenderProperties(
-    std::string id,
-    const int x,
-    const int y,
-    const int width,
-    const int height,
-    const int row,
-    const int column,
-    const double angle,
-    const SDL_RendererFlip flip,
-    const float scrollRatio
-):
-    id(std::move(id)),
-    x(x),
-    y(y),
-    width(width),
-    height(height),
-    row(row),
-    column(column),
-    angle(angle),
-    flip(flip),
-    scrollRatio(scrollRatio)
-{
-}
 
 SDL_Rect TextureRenderProperties::getSource() const
 {
