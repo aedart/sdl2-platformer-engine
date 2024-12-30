@@ -30,6 +30,7 @@ Warrior::Warrior(const Properties* properties) : Character(properties)
     this->runForce = Warrior::DEFAULT_RUN_FORCE;
 
     this->collider = new Collider();
+    this->collider->setBuffer(-6, -12, 34, 14); // TODO: default/initial buffer for SDL_FLIP_NONE
 
     this->rigidBody = new RigidBody();
     this->rigidBody->setGravity(3.0f);
