@@ -76,6 +76,10 @@ class TextureManager
          * @param width The width of the texture to be drawn in pixels
          * @param height The height of the texture to be drawn in pixels
          * @param flip Flip mode
+         * @param scrollRatio Scroll ratio if element needs to move in relation
+         *                    to the camera. If 0 (zero), then element will be
+         *                    fixed (camera does not follow). If 1, then element
+         *                    follows the camera.
          */
         void draw(
             const std::string& id,
@@ -83,7 +87,8 @@ class TextureManager
             int y,
             int width,
             int height,
-            SDL_RendererFlip flip = SDL_FLIP_NONE
+            SDL_RendererFlip flip = SDL_FLIP_NONE,
+            float scrollRatio = 1.0
         );
 
         /**
@@ -97,6 +102,10 @@ class TextureManager
          * @param row The row to be drawn
          * @param frame The frame to be drawn
          * @param flip Flip mode
+         * @param scrollRatio Scroll ratio if element needs to move in relation
+         *                    to the camera. If 0 (zero), then element will be
+         *                    fixed (camera does not follow). If 1, then element
+         *                    follows the camera.
          */
         void drawFrame(
             const std::string& id,
@@ -106,7 +115,8 @@ class TextureManager
             int height,
             int row,
             int frame,
-            SDL_RendererFlip flip = SDL_FLIP_NONE
+            SDL_RendererFlip flip = SDL_FLIP_NONE,
+            float scrollRatio = 1.0
         );
 
         /**
@@ -120,6 +130,10 @@ class TextureManager
          * @param row The row to be drawn
          * @param frame The frame to be drawn
          * @param flip Flip mode
+         * @param scrollRatio Scroll ratio if element needs to move in relation
+         *                    to the camera. If 0 (zero), then element will be
+         *                    fixed (camera does not follow). If 1, then element
+         *                    follows the camera.
          */
         void drawTile(
             const std::string& tilesetID,
@@ -129,7 +143,8 @@ class TextureManager
             int height,
             int row,
             int frame,
-            SDL_RendererFlip flip = SDL_FLIP_NONE
+            SDL_RendererFlip flip = SDL_FLIP_NONE,
+            float scrollRatio = 1.0
         );
 
         /**

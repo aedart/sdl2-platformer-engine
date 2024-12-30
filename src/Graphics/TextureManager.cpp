@@ -111,7 +111,8 @@ void TextureManager::draw(
     const int y,
     const int width,
     const int height,
-    const SDL_RendererFlip flip
+    const SDL_RendererFlip flip,
+    const float scrollRatio
 ){
     this->drawFrame(
         id,
@@ -121,7 +122,8 @@ void TextureManager::draw(
         height,
         0,
         0,
-        flip
+        flip,
+        scrollRatio
     );
 }
 
@@ -133,7 +135,8 @@ void TextureManager::drawFrame(
     const int height,
     const int row,
     const int frame,
-    const SDL_RendererFlip flip
+    const SDL_RendererFlip flip,
+    const float scrollRatio
 ) {
     // Abort if no texture exists for given id
     if (!this->textures.contains(id)) {
@@ -146,8 +149,11 @@ void TextureManager::drawFrame(
 
     // Obtain the camera's position, such that the destination of the texture can
     // be drawn correctly, with respect to what the camera's is viewing.
-    const auto cameraPosition = Camera::getInstance().getPosition();
+    // Also, add a scrolling ratio to the camara's position to enable parallax scrolling
+    // of backgrounds or other elements.
+    const auto cameraPosition = Camera::getInstance().getPosition() * scrollRatio;
     // const SDL_Rect dest = {x, y, width, height}; // Original without camera...
+
     const SDL_Rect dest = {
         static_cast<int>(x - cameraPosition.x),
         static_cast<int>(y - cameraPosition.y),
@@ -178,7 +184,8 @@ void TextureManager::drawTile(
     const int height,
     const int row,
     const int frame,
-    const SDL_RendererFlip flip
+    const SDL_RendererFlip flip,
+    const float scrollRatio
 ) {
     this->drawFrame(
         tilesetID,
@@ -188,7 +195,8 @@ void TextureManager::drawTile(
         height,
         row,
         frame,
-        flip
+        flip,
+        scrollRatio
     );
 }
 
