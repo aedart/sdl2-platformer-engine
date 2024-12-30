@@ -222,7 +222,15 @@ void Engine::render()
     SDL_RenderClear(this->renderer);
 
     // TODO:
-    TextureManager::getInstance().draw("bg", 0, 0, 576 * 1.5, 324 * 1.5);
+    TextureManager::getInstance().draw(
+        "bg",
+        0,
+        0,
+        576 * 1.5,
+        324 * 1.5,
+        SDL_FLIP_NONE,
+        0.5
+    );
     // TODO: end
 
     // Render the current map
