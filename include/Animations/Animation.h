@@ -1,11 +1,10 @@
 #ifndef ANIMATIONS_ANIMATION_H
 #define ANIMATIONS_ANIMATION_H
 
-#include <string>
-#include <SDL2/SDL.h>
-
 /**
  * Animation
+ *
+ * @abstract
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
@@ -14,92 +13,71 @@ class Animation
     public:
         /**
          * Constructor
+         *
+         * @param repeat If true, animation will continue to repeat
+         *               once it has completed.
          */
-        Animation();
+        explicit Animation(bool repeat = true);
 
         /**
          * Update this animation
+         *
+         * @param delta
          */
-        void update();
+        virtual void update(float delta) = 0;
 
         /**
-         * Draw the animation
+         * Set the repeat state of this animation
          *
-         * @param x X position in sprite
-         * @param y Y position in sprite
-         * @param width Sprite width
-         * @param height Sprite height
-         * @param flip Flip mode
+         * @param repeat True if animation must repeat, false otherwise
          */
-        void draw(
-            float x,
-            float y,
-            float width,
-            float height,
-            SDL_RendererFlip flip = SDL_FLIP_NONE
-        ) const;
+        void setRepeat(bool repeat);
 
         /**
-         * Set this animation's properties
+         * Determine if this animation is repeating
          *
-         * @param textureID The id of the texture
-         * @param amountFrames Total amount of frames of this animation
-         * @param animationSpeed The speed of the animation
-         * @param row Row in sprite (y-axis)
-         * @param column column in spite (x-axis - the start frame)
-         * @param loop If true, the animation restarts from its initial frame.
-         *             If false, the animation stops at its last frame
+         * @return
          */
-        void setProperties(
-            const std::string& textureID,
-            int amountFrames,
-            int animationSpeed,
-            int row = 0,
-            int column = 0,
-            bool loop = true
-        );
+        [[nodiscard]] bool isRepeating() const;
+
+        /**
+         * Determine if this animation has ended
+         *
+         * @return
+         */
+        [[nodiscard]] bool isDone() const;
+
+        /**
+         * Set the current frame that must be drawn
+         *
+         * @param frame
+         */
+        void setCurrentFrame(int frame);
+
+        /**
+         * Get the current frame that is being drawn
+         *
+         * @return
+         */
+        [[nodiscard]] int getCurrentFrame() const;
 
     protected:
         /**
-         * ID of the texture this game object uses
+         * State that determines if the animation should
+         * be repeated once it has completed.
          */
-        std::string textureID;
+        bool repeat;
 
         /**
-         * The sprite row
+         * State that determines if animation has
+         * completed / ended.
          */
-        int row;
-
-        /**
-         * The sprite column (the start frame)
-         */
-        int column;
+        bool done;
 
         /**
          * The current frame to be drawn
          */
-        int frame;
-
-        /**
-         * The total amount of frames of this animation
-         */
-        int amountFrames;
-
-        /**
-         * The animation speed
-         */
-        int animationSpeed;
-
-        /**
-         * State that determines if the animation should
-         * loop.
-         */
-        bool loop;
-
-        /**
-         * The last frame number
-         */
-        int lastFrame;
+        int currentFrame;
 };
 
 #endif  // ANIMATIONS_ANIMATION_H

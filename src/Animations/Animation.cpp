@@ -1,65 +1,33 @@
 #include "Animations/Animation.h"
 
-#include <SDL2/SDL.h>
-
-#include <iostream>
-#include <ostream>
-#include <string>
-
-#include "Graphics/TextureManager.h"
-
-Animation::Animation() {}
-
-void Animation::update()
+Animation::Animation(const bool repeat):
+    repeat(repeat),
+    done(false),
+    currentFrame(0)
 {
-    // TODO: Take delta into account?
-
-    // Prevent looping animation, if needed.
-    if (!this->loop && this->frame == this->lastFrame) {
-        this->frame = this->lastFrame;
-        return;
-    }
-
-    // Otherwise, compute the next frame to be rendered
-    this->frame = (SDL_GetTicks() / this->animationSpeed) % this->amountFrames;
 }
 
-void Animation::draw(
-    const float x,
-    const float y,
-    const float width,
-    const float height,
-    const SDL_RendererFlip flip
-) const
+void Animation::setRepeat(const bool repeat)
 {
-    TextureManager::getInstance().drawFrame({
-        .id = this->textureID,
-        .x = static_cast<int>(x),
-        .y = static_cast<int>(y),
-        .width = static_cast<int>(width),
-        .height = static_cast<int>(height),
-        .row = this->row,
-        .column = this->column + this->frame,
-        .flip = flip,
-    });
+    this->repeat = repeat;
 }
 
-void Animation::setProperties(
-    const std::string& textureID,
-    const int amountFrames,
-    const int animationSpeed,
-    const int row,
-    const int column,
-    const bool loop
-) {
-    this->textureID = textureID;
-    this->amountFrames = amountFrames;
-    this->animationSpeed = animationSpeed;
-    this->row = row;
-    this->column = column;
-    this->loop = loop;
-    this->lastFrame = this->amountFrames - 1;
+bool Animation::isRepeating() const
+{
+    return this->repeat;
+}
 
-    // Debug
-    // std::cout << this->textureID << ", total frames: " << this->amountFrames << ", last frame: " << this->lastFrame << std::endl;
+bool Animation::isDone() const
+{
+    return this->done;
+}
+
+void Animation::setCurrentFrame(const int frame)
+{
+    this->currentFrame = frame;
+}
+
+int Animation::getCurrentFrame() const
+{
+    return this->currentFrame;
 }
