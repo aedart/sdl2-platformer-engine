@@ -38,6 +38,16 @@ struct TextureRenderProperties
       int height = 1;
 
       /**
+       * Scale factor for textures x-axis when rendered
+       */
+      float scaleX = 1.0;
+
+      /**
+       * Scale factor for textures x-axis when rendered
+       */
+      float scaleY = 1.0;
+
+      /**
        * The row to be drawn, if rendering from a sprite sheet
        */
       int row = 0;

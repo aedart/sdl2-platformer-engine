@@ -28,7 +28,7 @@ SDL_Rect TextureRenderProperties::getDestination() const
     return {
         .x = static_cast<int>(this->x - cameraPosition.x),
         .y = static_cast<int>(this->y - cameraPosition.y),
-        .w = this->width,
-        .h = this->height
+        .w = static_cast<int>(this->width * this->scaleX),
+        .h = static_cast<int>(this->height * this->scaleY),
     };
 }
