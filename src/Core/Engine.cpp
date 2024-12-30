@@ -126,7 +126,7 @@ bool Engine::init(const char *title, const int width, const int height)
         return this->running = false;
     }
 
-    // TODO: Cleanup this stuff
+    // TODO: ... Map SHOULD be specifiable in the engine...
     const std::string mapID = "demo_map";
     auto& mapParser = Parser::getInstance();
 
@@ -137,14 +137,13 @@ bool Engine::init(const char *title, const int width, const int height)
 
     this->currentMap = mapParser.get(mapID);
 
-    // TODO: ...
-    TextureManager::getInstance().load("bg", "resources/tilesets/exclusion-zone/backgrounds/day/2.png");
+    // TODO: ... Texture file SHOULD be specifiable in the engine...
+    const std::string texturesFile = "resources/textures.xml";
+    if (!TextureManager::getInstance().parseTexture(texturesFile)) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to textures files: %s", texturesFile.c_str());
+        return this->running = false;
+    }
 
-    // TODO: ...
-    TextureManager::getInstance().load("warrior_idle", "resources/characters/punk/Punk_idle.png");
-    TextureManager::getInstance().load("warrior_run", "resources/characters/punk/Punk_run.png");
-    TextureManager::getInstance().load("warrior_jump", "resources/characters/punk/Punk_jump.png");
-    TextureManager::getInstance().load("warrior_attack", "resources/characters/punk/Punk_attack2.png");
     player = new Warrior(new Properties(
         "warrior_idle",
         48,
