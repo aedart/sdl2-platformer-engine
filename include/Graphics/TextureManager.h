@@ -6,6 +6,8 @@
 #include <map>
 #include <string>
 
+#include "Graphics/TextureRenderProperties.h"
+
 /**
  * TextureManager
  *
@@ -70,82 +72,23 @@ class TextureManager
         /**
          * Draw a texture
          *
-         * @param id The id of the texture
-         * @param x X-axis offset in pixels
-         * @param y Y-axis offset in pixels
-         * @param width The width of the texture to be drawn in pixels
-         * @param height The height of the texture to be drawn in pixels
-         * @param flip Flip mode
-         * @param scrollRatio Scroll ratio if element needs to move in relation
-         *                    to the camera. If 0 (zero), then element will be
-         *                    fixed (camera does not follow). If 1, then element
-         *                    follows the camera.
+         * @ param properties Rendering properties of texture
          */
-        void draw(
-            const std::string& id,
-            int x,
-            int y,
-            int width,
-            int height,
-            SDL_RendererFlip flip = SDL_FLIP_NONE,
-            float scrollRatio = 1.0
-        );
+        void draw(const TextureRenderProperties& properties);
 
         /**
          * Draw a frame from given texture
          *
-         * @param id The id of the texture
-         * @param x X-axis offset in pixels
-         * @param y Y-axis offset in pixels
-         * @param width The width of the texture to be drawn in pixels
-         * @param height The height of the texture to be drawn in pixels
-         * @param row The row to be drawn
-         * @param frame The frame to be drawn
-         * @param flip Flip mode
-         * @param scrollRatio Scroll ratio if element needs to move in relation
-         *                    to the camera. If 0 (zero), then element will be
-         *                    fixed (camera does not follow). If 1, then element
-         *                    follows the camera.
+         * @param properties Rendering properties of texture (sprite sheet)
          */
-        void drawFrame(
-            const std::string& id,
-            int x,
-            int y,
-            int width,
-            int height,
-            int row,
-            int frame,
-            SDL_RendererFlip flip = SDL_FLIP_NONE,
-            float scrollRatio = 1.0
-        );
+        void drawFrame(const TextureRenderProperties& properties);
 
         /**
          * Draw a tile from given tileset
          *
-         * @param tilesetID The id of the texture (tileset id)
-         * @param x X-axis offset in pixels
-         * @param y Y-axis offset in pixels
-         * @param width The width of the tile texture to be drawn in pixels
-         * @param height The height of the tile texture to be drawn in pixels
-         * @param row The row to be drawn
-         * @param frame The frame to be drawn
-         * @param flip Flip mode
-         * @param scrollRatio Scroll ratio if element needs to move in relation
-         *                    to the camera. If 0 (zero), then element will be
-         *                    fixed (camera does not follow). If 1, then element
-         *                    follows the camera.
+         * @param properties Rendering properties of texture (sprite sheet)
          */
-        void drawTile(
-            const std::string& tilesetID,
-            int x,
-            int y,
-            int width,
-            int height,
-            int row,
-            int frame,
-            SDL_RendererFlip flip = SDL_FLIP_NONE,
-            float scrollRatio = 1.0
-        );
+        void drawTile(const TextureRenderProperties& properties);
 
         /**
          * Drop (remove) texture from this manager

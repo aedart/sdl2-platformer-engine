@@ -5,6 +5,7 @@
 #include <tinyxml2.h>
 
 #include "Graphics/TextureManager.h"
+#include "Graphics/TextureRenderProperties.h"
 #include "Core/Engine.h"
 #include "Cameras/Camera.h"
 #include "Physics/Vector2D.h"
@@ -105,99 +106,40 @@ void TextureManager::clean()
     this->textures.clear();
 }
 
-void TextureManager::draw(
-    const std::string& id,
-    const int x,
-    const int y,
-    const int width,
-    const int height,
-    const SDL_RendererFlip flip,
-    const float scrollRatio
-){
-    this->drawFrame(
-        id,
-        x,
-        y,
-        width,
-        height,
-        0,
-        0,
-        flip,
-        scrollRatio
-    );
+void TextureManager::draw(const TextureRenderProperties& properties)
+{
+    this->drawFrame(properties);
 }
 
-void TextureManager::drawFrame(
-    const std::string& id,
-    const int x,
-    const int y,
-    const int width,
-    const int height,
-    const int row,
-    const int frame,
-    const SDL_RendererFlip flip,
-    const float scrollRatio
-) {
+void TextureManager::drawFrame(const TextureRenderProperties& properties)
+{
     // Abort if no texture exists for given id
-    if (!this->textures.contains(id)) {
-        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Unable to find texture for id: %s", id.c_str());
+    if (!this->textures.contains(properties.id)) {
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Unable to find texture for id: %s", properties.id.c_str());
         return;
     }
 
-    // The source of the texture we wish to draw (row and frame)
-    const SDL_Rect source = {width * frame, height * row, width, height};
-
-    // Obtain the camera's position, such that the destination of the texture can
-    // be drawn correctly, with respect to what the camera's is viewing.
-    // Also, add a scrolling ratio to the camara's position to enable parallax scrolling
-    // of backgrounds or other elements.
-    const auto cameraPosition = Camera::getInstance().getPosition() * scrollRatio;
-    // const SDL_Rect dest = {x, y, width, height}; // Original without camera...
-
-    const SDL_Rect dest = {
-        static_cast<int>(x - cameraPosition.x),
-        static_cast<int>(y - cameraPosition.y),
-        width,
-        height
-    };
+    const auto source = properties.getSource();
+    const auto destination = properties.getDestination();
 
     const auto success = SDL_RenderCopyEx(
         Engine::getInstance().getRenderer(),
-        this->textures[id],
+        this->textures[properties.id],
         &source,
-        &dest,
-        0,
+        &destination,
+        properties.angle,
         nullptr,
-        flip
+        properties.flip
     );
 
     if (success != 0) {
-        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Unable to render texture for %s: %s", id.c_str(), SDL_GetError());
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Unable to render texture for %s: %s", properties.id.c_str(), SDL_GetError());
     }
 }
 
-void TextureManager::drawTile(
-    const std::string& tilesetID,
-    const int x,
-    const int y,
-    const int width,
-    const int height,
-    const int row,
-    const int frame,
-    const SDL_RendererFlip flip,
-    const float scrollRatio
-) {
-    this->drawFrame(
-        tilesetID,
-        x,
-        y,
-        width,
-        height,
-        row,
-        frame,
-        flip,
-        scrollRatio
-    );
+void TextureManager::drawTile(const TextureRenderProperties& properties)
+{
+    this->drawFrame(properties);
 }
 
 void TextureManager::drop(const std::string& id)
