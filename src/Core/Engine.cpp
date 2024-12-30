@@ -228,8 +228,8 @@ void Engine::render()
         .y = 0,
         .width = 576,
         .height = 324,
-        .scaleX = 1.5,
-        .scaleY = 1.5,
+        .scaleX = 1.2,
+        .scaleY = 1.2,
         .scrollRatio = 0.5
     });
 
