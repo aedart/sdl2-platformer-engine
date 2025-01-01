@@ -62,6 +62,18 @@ class Collider
          */
         [[nodiscard]] SDL_Rect getBuffer() const;
 
+        /**
+         * Determine if this collider collides with the map
+         *
+         * @return
+         */
+        [[nodiscard]] bool collidesWithMap() const;
+
+        /**
+         * Draw this collider
+         */
+        void draw();
+
     protected:
         /**
          * The collider box
