@@ -9,13 +9,12 @@
 #include "Timers/Timer.h"
 #include "Maps/Parser.h"
 #include "Cameras/Camera.h"
+#include "Objects/ObjectsFactory.h"
+#include "Objects/GameObject.h"
 
 // TODO: Clean this stuff
-#include "Characters/Warrior.h"
-Warrior* player = nullptr;
-
-#include "Characters/Stalker.h"
-Stalker* stalker = nullptr;
+GameObject* player = nullptr;
+GameObject* stalker = nullptr;
 
 Engine& Engine::getInstance()
 {
@@ -29,6 +28,7 @@ Engine& Engine::getInstance()
 void Engine::destroy()
 {
     // Destroy all singleton instances
+    ObjectsFactory::destroy();
     Timer::destroy();
     InputHandler::destroy();
     TextureManager::destroy();
@@ -146,14 +146,15 @@ bool Engine::init(const char *title, const int width, const int height)
         return this->running = false;
     }
 
-    player = new Warrior(new Properties(
+    player = ObjectsFactory::getInstance().make("warrior", new Properties(
         "warrior_idle",
         48,
         48,
         100,
         200
     ));
-    stalker = new Stalker(new Properties(
+
+    stalker = ObjectsFactory::getInstance().make("stalker", new Properties(
         "stalker_idle",
         96,
         96,
