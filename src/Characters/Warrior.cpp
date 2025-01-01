@@ -115,7 +115,7 @@ void Warrior::update(const float delta)
     this->transform->x += this->rigidBody->getPosition().x;
     this->collider->setBox(this->transform->x, this->transform->y, this->width, this->height);
 
-    if (collisionHandler.mapCollision(this->collider->getBox())) {
+    if (this->collider->collidesWithMap()) {
         this->transform->x = this->lastSafePosition.x;
     }
 
@@ -125,7 +125,7 @@ void Warrior::update(const float delta)
     this->transform->y += this->rigidBody->getPosition().y;
     this->collider->setBox(this->transform->x, this->transform->y, this->width, this->height);
 
-    if (collisionHandler.mapCollision(this->collider->getBox())) {
+    if (this->collider->collidesWithMap()) {
         this->transform->y = this->lastSafePosition.y;
         this->isGrounded = true;
     } else {
@@ -155,13 +155,7 @@ void Warrior::draw()
     );
 
     // Debug Draw the collider box around the character
-    Vector2D camaraPosition = Camera::getInstance().getPosition();
-
-    auto box = this->collider->getBox();
-    box.x -= camaraPosition.x;
-    box.y -= camaraPosition.y;
-
-    SDL_RenderDrawRect(Engine::getInstance().getRenderer(), &box);
+    this->collider->draw();
 }
 
 void Warrior::clean()
