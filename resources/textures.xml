@@ -7,6 +7,9 @@
     <texture id="warrior_jump" source="resources/characters/punk/Punk_jump.png" />
     <texture id="warrior_attack" source="resources/characters/punk/Punk_attack2.png" />
 
+    <!-- Stalker -->
+    <texture id="stalker_idle" source="resources/characters/halloween/stalker/Idle.png" />
+
     <!-- Backgrounds -->
     <texture id="bg" source="resources/tilesets/exclusion-zone/backgrounds/day/2.png" />
 
