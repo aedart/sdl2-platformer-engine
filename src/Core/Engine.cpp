@@ -11,9 +11,11 @@
 #include "Cameras/Camera.h"
 
 // TODO: Clean this stuff
-#include "Physics/RigidBody.h"
 #include "Characters/Warrior.h"
 Warrior* player = nullptr;
+
+#include "Characters/Stalker.h"
+Stalker* stalker = nullptr;
 
 Engine& Engine::getInstance()
 {
@@ -151,6 +153,17 @@ bool Engine::init(const char *title, const int width, const int height)
         100,
         200
     ));
+    stalker = new Stalker(new Properties(
+        "stalker_idle",
+        96,
+        96,
+        450,
+        250
+    ));
+
+    // Add game objects
+    this->gameObjects.push_back(player);
+    this->gameObjects.push_back(stalker);
 
     // TODO: Camera...
     Camera::getInstance().setTarget(player->getPosition());
@@ -162,6 +175,14 @@ bool Engine::init(const char *title, const int width, const int height)
 
 bool Engine::clean()
 {
+    // Cleanup and remove game objects
+    for (const auto &object: this->gameObjects) {
+        object->clean();
+        delete object;
+    }
+    this->gameObjects.clear();
+
+    // Clean all textures
     TextureManager::getInstance().clean();
 
     // Warning: Cleaning the map parser here, can, for some reason cause a
@@ -201,9 +222,10 @@ void Engine::update()
     // Update the current game map.
     this->currentMap->update(deltaTime);
 
-    // TODO: Cleanup this stuff
-    player->update(deltaTime);
-    // TODO: -- end cleanup
+    // Update game objects
+    for (const auto object : this->gameObjects) {
+        object->update(deltaTime);
+    }
 
     // Update the camera's position
     Camera::getInstance().update(deltaTime);
@@ -238,9 +260,10 @@ void Engine::render()
     // Render the current map
     this->currentMap->render();
 
-    // TODO: Cleanup this stuff
-    player->draw();
-    // TODO: -- end cleanup
+    // Render game objects
+    for (const auto object : this->gameObjects) {
+        object->draw();
+    }
 
     // Finally, show the rendered elements.
     SDL_RenderPresent(this->renderer);
