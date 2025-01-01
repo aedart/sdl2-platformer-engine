@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <vector>
+#include "Objects/GameObject.h"
 #include "Maps/GameMap.h"
 
 /**
@@ -150,6 +152,11 @@ class Engine
          * The current game map to render
          */
         GameMap* currentMap;
+
+        /**
+         * Game objects to be processed
+         */
+        std::vector<GameObject*> gameObjects;
 
         /**
          * Default Constructor
