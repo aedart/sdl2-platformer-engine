@@ -183,6 +183,12 @@ bool Engine::clean()
     }
     this->gameObjects.clear();
 
+    // Cleanup game states
+    for (const auto &state: this->states) {
+        delete state;
+    }
+    this->states.clear();
+
     // Clean all textures
     TextureManager::getInstance().clean();
 
@@ -273,6 +279,23 @@ void Engine::render()
 void Engine::event()
 {
     InputHandler::getInstance().listen();
+}
+
+void Engine::popState()
+{
+    // TODO: ...
+}
+
+void Engine::pushState(GameState* state)
+{
+    // TODO: ...
+
+    this->states.push_back(state);
+}
+
+void Engine::changeState(GameState* state)
+{
+    // TODO: ...
 }
 
 bool Engine::isRunning() const

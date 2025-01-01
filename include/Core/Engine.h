@@ -7,6 +7,7 @@
 #include <vector>
 #include "Objects/GameObject.h"
 #include "Maps/GameMap.h"
+#include "States/GameState.h"
 
 /**
  * Engine
@@ -75,10 +76,14 @@ class Engine
          */
         void quit();
 
-        // TODO:
+        /**
+         * Update the engine's game objects and map
+         */
         void update();
 
-        // TODO:
+        /**
+         * Render the engine's game objects and map
+         */
         void render();
 
         /**
@@ -86,6 +91,25 @@ class Engine
          * and reacts accordingly.
          */
         void event();
+
+        /**
+         * Pop the current game state
+         */
+        void popState();
+
+        /**
+         * Add a game state to the list of states
+         *
+         * @param state The game state to be added
+         */
+        void pushState(GameState* state);
+
+        /**
+         * Change the current game state
+         *
+         * @param state The new game state
+         */
+        void changeState(GameState* state);
 
         /**
          * Determine if the engine is running
@@ -157,6 +181,11 @@ class Engine
          * Game objects to be processed
          */
         std::vector<GameObject*> gameObjects;
+
+        /**
+         * The registered game states
+         */
+        std::vector<GameState*> states;
 
         /**
          * Default Constructor
