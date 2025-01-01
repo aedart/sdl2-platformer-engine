@@ -12,6 +12,9 @@
 #include "Physics/Collider.h"
 #include "Physics/Vector2D.h"
 #include "Collisions/CollisionHandler.h"
+#include "Objects/Registrar.h"
+
+static Registrar<Warrior> registrar("warrior");
 
 Warrior::Warrior(const Properties* properties) : Character(properties)
 {

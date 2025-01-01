@@ -8,6 +8,9 @@
 #include "Physics/Vector2D.h"
 #include "Collisions/CollisionHandler.h"
 #include "Core/Engine.h"
+#include "Objects/Registrar.h"
+
+static Registrar<Stalker> registrar("stalker");
 
 Stalker::Stalker(const Properties* properties)
     : Character(properties)
