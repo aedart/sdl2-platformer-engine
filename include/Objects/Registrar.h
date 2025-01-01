@@ -4,6 +4,8 @@
 #include <string>
 
 #include "Objects/ObjectsFactory.h"
+#include "Objects/GameObject.h"
+#include "Objects/Properties.h"
 
 /**
  * Objects Registrar
@@ -19,7 +21,12 @@ class Registrar
          *
          * @param identifier
          */
-        explicit Registrar(const std::string& identifier);
+        explicit Registrar(std::string identifier)
+        {
+            ObjectsFactory::getInstance().bind(identifier, [](Properties* properties)->GameObject* {
+                return new T(properties);
+            });
+        }
 };
 
 #endif  // OBJECTS_REGISTRAR_H
