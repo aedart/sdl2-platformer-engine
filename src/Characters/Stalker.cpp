@@ -39,15 +39,13 @@ Stalker::Stalker(const Properties* properties)
 
 void Stalker::update(float delta)
 {
-    const CollisionHandler& collisionHandler = CollisionHandler::getInstance();
-
     // Move on x-axis
     this->rigidBody->update(delta);
     this->lastSafePosition.x = this->transform->x;
     this->transform->x += this->rigidBody->getPosition().x;
     this->collider->setBox(this->transform->x, this->transform->y, this->width, this->height);
 
-    if (collisionHandler.mapCollision(this->collider->getBox())) {
+    if (this->collider->collidesWithMap()) {
         this->transform->x = this->lastSafePosition.x;
     }
 
@@ -57,7 +55,7 @@ void Stalker::update(float delta)
     this->transform->y += this->rigidBody->getPosition().y;
     this->collider->setBox(this->transform->x, this->transform->y, this->width, this->height);
 
-    if (collisionHandler.mapCollision(this->collider->getBox())) {
+    if (this->collider->collidesWithMap()) {
         this->transform->y = this->lastSafePosition.y;
     } else {
     }
@@ -85,9 +83,7 @@ void Stalker::draw()
     );
 
     // Debug Draw the collider box around the character
-    auto box = this->collider->getBox();
-
-    SDL_RenderDrawRect(Engine::getInstance().getRenderer(), &box);
+    this->collider->draw();
 }
 
 void Stalker::clean()
