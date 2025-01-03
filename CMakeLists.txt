@@ -33,12 +33,24 @@ include("utilities")
 # Project's source files
 # --------------------------------------------------------------------------------------------------
 
-# Header files
-include_directories("${PROJECT_SOURCE_DIR}/include")
+# Find all cpp header files
+file(GLOB_RECURSE SOURCE_HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
 
-# Add all c source files under the src directory
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-add_executable(${PROJECT_NAME} ${SOURCES})
+# Find all cpp files
+file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
+
+# Set the executable file
+add_executable(${PROJECT_NAME} "${PROJECT_SOURCE_DIR}/src/main.cpp")
+
+# Add sources to the target
+target_sources(${PROJECT_NAME} PUBLIC
+        ${SOURCES}
+    PUBLIC
+    FILE_SET HEADERS
+    BASE_DIRS "${PROJECT_SOURCE_DIR}/include"
+    FILES
+        ${SOURCE_HEADERS}
+)
 
 # Copy resources (gfx... etc) into the build directory
 add_custom_target(copy_resources ALL
