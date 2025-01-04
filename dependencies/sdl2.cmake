@@ -21,7 +21,7 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
 
-# NOTE: Alternative setup can perhaps act as inspiration. However, it provided cumbersome and failed due
+# NOTE: Alternative setup can perhaps act as inspiration. However, it proved cumbersome and failed due
 # to strange Threads dependency not being resolved or setup correctly!
 # @see https://github.com/SourceCodeDeleted/CMAKE-SDL2-Skeleton
 # @see https://github.com/aminosbh/sdl2-cmake-modules
