@@ -1,6 +1,6 @@
 # SDL2 Platformer 2D Engine
 
-Demo project to learn writing a 2D Game Engine, C++ / [SDL2](https://www.libsdl.org/) programming 
+Demo project to learn writing a 2D Game Engine, C++ / [SDL2](https://www.libsdl.org/) programming.
 
 ## How to install
 
