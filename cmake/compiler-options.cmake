@@ -2,7 +2,7 @@
 # Setup compiler
 # --------------------------------------------------------------------------------------------------
 
-message("Setup compiler")
+message(STATUS "Setup compiler options")
 
 set(STRICT_COMPILE_OPTIONS
         -pedantic
