@@ -11,15 +11,7 @@ project(sdl2-platformer-engine LANGUAGES CXX)
 # @see https://cmake.org/cmake/help/latest/variable/CMAKE_MODULE_PATH.html
 # --------------------------------------------------------------------------------------------------
 
-set(DEPENDENCIES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies")
-
-list(
-    APPEND
-    CMAKE_MODULE_PATH
-
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake"
-    "${DEPENDENCIES_DIR}"
-)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # --------------------------------------------------------------------------------------------------
 # Compiler setup and utilities
@@ -65,4 +57,4 @@ add_dependencies(${PROJECT_NAME} copy_resources)
 # Dependencies
 # --------------------------------------------------------------------------------------------------
 
-include("dependencies.cmake")
+include("dependencies")
