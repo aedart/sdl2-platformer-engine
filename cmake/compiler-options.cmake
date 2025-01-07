@@ -35,3 +35,18 @@ set(STRICT_COMPILE_OPTIONS
 )
 
 mark_as_advanced(STRICT_COMPILE_OPTIONS)
+
+# add_compile_options(${STRICT_COMPILE_OPTIONS})
+
+#if (NOT RELEASE_BUILD)
+#    target_compile_options("${PROJECT_NAME}" PRIVATE
+#            ${STRICT_COMPILE_OPTIONS}
+#            -DDEBUG_LOG
+#            -g
+#            -O0
+#    )
+#else()
+#    target_compile_options("${PROJECT_NAME}" PRIVATE
+#            -O3
+#    )
+#endif()
