@@ -59,6 +59,10 @@ void Parser::clean()
         delete iterator->second;
     }
 
+    // for (auto &p : this->maps) {
+    //     delete p.second;
+    // }
+
     this->maps.clear();
 }
 
